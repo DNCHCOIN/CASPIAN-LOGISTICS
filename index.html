@@ -562,21 +562,33 @@ table{color:#253b51}
     ["Отказ","Cancel","取消"],
     ["Изтрий","Delete","删除"]
   ];
-  const translatedNodes=[];
-  const transMap=new Map(langPairs.map(([bg,en,zh])=>[bg,{bg,en,zh}]));
-  // Capture stable static nodes only, leaving dynamic forms and saved business data intact.
-  const walker=document.createTreeWalker(document.querySelector('.app-shell'),NodeFilter.SHOW_TEXT);
-  let textItem;
-  while((textItem=walker.nextNode())){
-    const origin=textItem.nodeValue.trim();
-    if(transMap.has(origin)) translatedNodes.push({node:textItem,origin});
-  }
+  // Resolve text in all three supported languages, including nodes rendered after page load.
+  // Only exact dictionary matches are translated; user-entered company and cargo data stays untouched.
+  const transMap=new Map();
+  langPairs.forEach(([bg,en,zh])=>{
+    const translations={bg,en,zh};
+    [bg,en,zh].forEach(label=>transMap.set(label,translations));
+  });
   const languageSwitch=$('#caspian-language');
+  function translateVisibleLabels(selected){
+    const root=document.querySelector('.app-shell');
+    if(!root)return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let node;
+    while((node=walker.nextNode())){
+      if(node.parentElement?.closest('script,style,textarea,[contenteditable="true"]'))continue;
+      const raw=node.nodeValue, label=raw.trim(), translations=transMap.get(label);
+      if(!translations)continue;
+      // Keep any original whitespace around the exact matched label.
+      const first=raw.indexOf(label);
+      node.nodeValue=raw.slice(0,first)+translations[selected]+raw.slice(first+label.length);
+    }
+  }
   function setDemoLanguage(lang){
     const selected=['bg','en','zh'].includes(lang)?lang:'bg';
     document.documentElement.lang=selected==='zh'?'zh-CN':selected;
     languageSwitch.value=selected;
-    translatedNodes.forEach(({node,origin})=>{if(node.isConnected)node.nodeValue=transMap.get(origin)[selected];});
+    translateVisibleLabels(selected);
     const url=new URL(location.href);url.searchParams.set('lang',selected);
     try{history.replaceState(null,'',url);localStorage.setItem('caspian_demo_language',selected)}catch{}
   }
@@ -585,6 +597,7 @@ table{color:#253b51}
   setDemoLanguage((new URLSearchParams(location.search).get('lang')||rememberedLanguage).toLowerCase());
 
   initRoutes();renderCargo();renderDocs();renderPartners();
+  translateVisibleLabels(languageSwitch.value);
   const page=new URLSearchParams(location.search).get('page');if(page&&pageTitles[page])navigate(page);
 })();
 
