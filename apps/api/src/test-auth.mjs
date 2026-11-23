@@ -1,7 +1,7 @@
 import { randomBytes, scrypt as rawScrypt, timingSafeEqual, createHash } from 'node:crypto';
 import { promisify } from 'node:util';
 const scrypt = promisify(rawScrypt);
-export const ACCOUNT_NAMES = Object.freeze(['nedka-admin','tsvetan-review']);
+export const ACCOUNT_NAMES = Object.freeze(['nedka-admin','tsvetan-admin']);
 export const COOKIE = 'caspian_test_session';
 const HASH_BYTES = 64;
 const SESSION_SECONDS = 60 * 60 * 8;
