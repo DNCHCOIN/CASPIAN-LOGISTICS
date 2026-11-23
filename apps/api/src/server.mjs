@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
 import { Pool } from 'pg';
 import { createHandler } from './handler.mjs';
 import { createTestAuthStore } from './test-auth-store.mjs';
@@ -14,7 +15,29 @@ const pool = new Pool({ connectionString: databaseUrl, max: 5, connectionTimeout
 const authRoutes = loginAllowed() && ['127.0.0.1','::1'].includes(host)
   ? makeTestAuthRoutes({store:createTestAuthStore(pool),host,enabled:true}) : null;
 const handler = createHandler({ checkDatabase: () => pool.query('SELECT 1'), authRoutes });
-const server = createServer((req, res) => { Promise.resolve(handler(req, res)).catch(err => {
+const staticTestFiles = {
+  '/test-login': ['../public/test-login.html','text/html; charset=utf-8'],
+  '/test-login.css': ['../public/test-login.css','text/css; charset=utf-8'],
+  '/test-login.js': ['../public/test-login.js','application/javascript; charset=utf-8']
+};
+async function dispatch(req,res){
+  const url=new URL(req.url ?? '/', 'http://localhost');
+  if(authRoutes && req.method==='GET' && staticTestFiles[url.pathname]){
+    const [file,type]=staticTestFiles[url.pathname];
+    const bytes=await readFile(new URL(file,import.meta.url));
+    res.writeHead(200,{
+      'Content-Type':type,
+      'Cache-Control':'no-store',
+      'X-Content-Type-Options':'nosniff',
+      'Content-Security-Policy':"default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+      'X-Frame-Options':'DENY'
+    });
+    res.end(bytes);
+    return;
+  }
+  return handler(req,res);
+}
+const server = createServer((req, res) => { Promise.resolve(dispatch(req, res)).catch(err => {
   console.error('Unhandled request failure', err);
   if (!res.headersSent) res.writeHead(500, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'internal_error' }));
