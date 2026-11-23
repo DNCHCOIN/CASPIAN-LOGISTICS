@@ -1,0 +1,12 @@
+# Local secrets and runtime data
+.env
+.env.*
+!.env.example
+!.gitignore
+node_modules/
+dist/
+coverage/
+*.log
+*.sql.gz
+*.dump
+.DS_Store
