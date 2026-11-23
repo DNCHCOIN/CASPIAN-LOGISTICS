@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071626">
+  <meta name="description" content="CASPIAN LOGISTICS — демонстрационна мултимодална логистична платформа за Средния коридор.">
+  <title>CASPIAN LOGISTICS | Multimodal Transport Platform</title>
+  <style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#e4edf5;background:#071626;font-synthesis:none;font-smooth:always;--bg:#071626;--side:#0b1a2b;--panel:#102338;--panel-2:#11283e;--line:#274156;--muted:#8da7ba;--accent:#28dfc6;--accent-2:#1bc8b4;--white:#f0f7fc}
+*{box-sizing:border-box}body{margin:0;min-width:320px}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit}.app-shell{min-height:100vh;display:grid;grid-template-columns:240px minmax(0,1fr)}.sidebar{background:var(--side);border-right:1px solid #203548;display:flex;flex-direction:column;padding:30px 16px 21px;min-width:0;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;align-items:center;gap:10px;padding:0 9px}.brand-icon{width:42px;height:42px;border-radius:10px;background:#12394b;color:#33e5d0;display:grid;place-items:center}.brand strong{font-weight:900;letter-spacing:.07em;font-size:13px;line-height:1.2;display:flex;flex-direction:column}.brand strong span{color:#3be0cc}.brand small{display:block;margin-top:4px;font-size:8px;letter-spacing:.19em;font-weight:700;color:#849fb4}.workspace-indicator{display:flex;align-items:center;gap:8px;margin-top:31px;background:#102b39;border:1px solid #25535a;border-radius:7px;padding:12px;font-size:10px;font-weight:800;letter-spacing:.09em;color:#a8dddb}.workspace-spot,.pulse-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 0 4px #21c5b01c;display:inline-block}.workspace-version{margin-left:auto;color:#62aea8}.nav-heading{margin:29px 12px 12px;color:#708ba2;font-size:10px;font-weight:850;letter-spacing:.14em}.second-heading{margin-top:26px}.main-nav{display:grid;gap:5px}.nav-link{border:1px solid transparent;color:#9fb4c6;background:transparent;text-align:left;display:flex;align-items:center;gap:13px;border-radius:8px;padding:12px 13px;font-size:12px;font-weight:650;transition:.15s}.nav-link:hover{color:#edf7fb;background:#152e43}.nav-link.active{color:#70f0da;background:#153943;border-color:#285962}.nav-icon{font-size:19px;width:20px;line-height:1;text-align:center;font-weight:400;color:#7399ad}.nav-link.active .nav-icon{color:#38e5cd}.nav-number{font-size:10px;margin-left:auto;border-radius:6px;background:#224353;padding:3px 6px}.sidebar-bottom{margin-top:auto;display:flex;gap:10px;padding:15px 10px;background:#13283a;border:1px solid #2a4154;border-radius:9px}.bottom-icon{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#274e59;color:#75e6d4;text-align:center;line-height:20px;font-weight:800}.sidebar-bottom strong{font-size:11px}.sidebar-bottom p{font-size:10px;color:#93acbf;line-height:1.6;margin:6px 0 0}.sidebar-footer{padding:23px 10px 0;font-size:9px;line-height:1.75;color:#637e93}.page-content{min-width:0;overflow:hidden}.topbar{height:75px;border-bottom:1px solid #1e3449;display:flex;align-items:center;justify-content:space-between;padding:0 38px;background:#0a1b2d}.top-left,.top-actions{display:flex;align-items:center;gap:16px}.breadcrumb{color:#7f9bad;font-weight:750;letter-spacing:.1em;font-size:10px}.breadcrumb span{color:#46677f;padding:0 8px}.breadcrumb strong{color:#d7e5eb}.top-status{font-size:11px;color:#9fbac6;display:flex;align-items:center;gap:10px}.top-divider{height:25px;border-left:1px solid #284356}.avatar{height:34px;width:34px;border-radius:9px;display:grid;place-items:center;background:#214553;color:#6ae7d2;font-weight:800;font-size:11px}.mobile-menu{display:none}main{padding:35px 38px 20px;max-width:1480px;margin:auto}.page{display:none;animation:fadein .15s ease-out}.page.active{display:block}@keyframes fadein{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:none}}.intro-line{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#4ad4c2;letter-spacing:.15em;font-size:10px;font-weight:850;margin-bottom:18px}.today-tag{color:#8baabe;letter-spacing:normal;font-weight:550}.hero{min-height:296px;border:1px solid #2a5b64;background:linear-gradient(115deg,#12374b 0%,#0d2b42 55%,#124e55 100%);border-radius:16px;position:relative;overflow:hidden;display:flex;align-items:center;padding:37px}.hero:after{content:'';position:absolute;width:440px;height:440px;right:-110px;top:-200px;background:radial-gradient(circle,#27c9b330,transparent 70%);pointer-events:none}.hero-mesh{position:absolute;right:-20px;top:0;bottom:0;width:49%;pointer-events:none;opacity:.86}.hero-mesh svg{width:100%;height:100%}.hero-content{position:relative;z-index:1;max-width:670px}.eyebrow,.section-kicker{font-size:10px;color:#4be6d1;letter-spacing:.17em;font-weight:850}.small-square{display:inline-block;background:#31d6c0;width:7px;height:7px;margin-right:6px;transform:rotate(45deg)}.hero h1{font-size:clamp(30px,3.6vw,51px);line-height:1.13;letter-spacing:-.06em;margin:20px 0 14px;color:#f0fafb;font-weight:850}.hero h1 em{font-style:normal;color:#51e4d1}.hero p{font-size:12.5px;line-height:1.7;max-width:520px;color:#bcd2df;margin:0}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{border-radius:8px;border:1px solid transparent;min-height:39px;padding:10px 16px;display:inline-flex;align-items:center;justify-content:center;gap:17px;font-weight:800;font-size:11.5px;transition:background .15s,color .15s,transform .15s;white-space:nowrap}.btn:hover{transform:translateY(-1px)}.btn-primary{background:#27e0c4;color:#052d35;border-color:#27e0c4}.btn-primary:hover{background:#8af7e6}.btn-ghost{background:#ffffff0b;border-color:#577c8c;color:#e1f2f5}.btn-ghost:hover{background:#ffffff1a}.btn-danger{color:#ffdadd;border-color:#b85d6f;background:#712b3e}.btn-danger:hover{background:#86394c}.btn-wide{width:100%;margin-top:9px}.smaller{min-height:34px;padding:8px 12px}.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:18px}.stat-card{border:1px solid #294156;background:#102438;border-radius:10px;padding:17px;display:flex;align-items:flex-start;gap:12px;min-width:0}.stat-icon{background:#174c50;color:#54e9d4;border:1px solid #286c6e;width:33px;height:33px;border-radius:8px;display:grid;place-items:center;font-size:20px;flex-shrink:0}.stat-card span{display:block;font-size:10.5px;color:#8daabd}.stat-card strong{display:block;font-size:27px;letter-spacing:-.045em;color:#ebf7fa;line-height:1.2;margin:4px 0}.stat-card small{font-size:9.5px;color:#6f93a9;line-height:1.5}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:33px 0 15px}.section-heading h2{margin:7px 0 0;font-size:20px;letter-spacing:-.03em}.text-link{border:0;color:#5ce2d3;background:transparent;padding:5px;font-weight:800;font-size:11px}.text-link:hover{text-decoration:underline}.corridor-card,.surface-card{border:1px solid #294154;background:#102438;border-radius:11px}.corridor-card{padding:22px}.corridor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.corridor-head strong{font-size:13px}.corridor-head small{font-size:11px;color:#8fa9ba;display:block;margin-top:7px}.outline-tag{display:inline-flex;border:1px solid #2b7777;color:#5ddfcf;background:#163b46;padding:6px 9px;font-size:9px;font-weight:850;letter-spacing:.08em;border-radius:5px;white-space:nowrap}.corridor-steps{display:flex;align-items:stretch;margin:27px 0 21px;position:relative}.corridor-steps:before{content:'';position:absolute;left:9%;right:9%;top:18px;height:2px;background:linear-gradient(90deg,#2bd6c0,#236fa2,#25c8b4)}.corridor-step{position:relative;text-align:center;flex:1;z-index:1;min-width:0}.corridor-circle{background:#144d55;border:2px solid #26cdbd;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;margin:0 auto 12px;color:#8dfae9;font-weight:800;font-size:11px;box-shadow:0 0 0 6px #102438}.corridor-step strong{font-size:12px;display:block}.corridor-step small{display:block;color:#8ba6b8;margin-top:6px;font-size:10px}.mode-line{border-top:1px solid #244056;padding-top:15px;display:flex;flex-wrap:wrap;align-items:center;gap:17px;color:#a9c1cd;font-size:10px}.legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;background:#54deb5}.legend-dot.sea{background:#4b9ef1}.legend-dot.rail{background:#d9bc78}.mode-line small{margin-left:auto;color:#688ba3}.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.feature-card{min-height:169px;border:1px solid #274356;border-radius:10px;background:#11263b;text-align:left;padding:18px;display:flex;flex-direction:column;color:#e5f3f7;transition:background .15s,transform .15s}.feature-card:hover{background:#16354b;transform:translateY(-2px)}.feature-symbol{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;background:#17474c;color:#39e4cc;font-size:20px;margin-bottom:16px}.feature-card strong{font-size:12px}.feature-card p{font-size:10.5px;color:#94b1c1;line-height:1.55;margin:7px 0}.feature-arrow{margin-top:auto;align-self:flex-end;color:#42dfcb;font-size:15px}.page-title-row{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:24px}.page-title-row h1{font-size:clamp(23px,3vw,31px);letter-spacing:-.045em;margin:9px 0 8px}.page-title-row p{margin:0;color:#91aabb;font-size:12px;line-height:1.6;max-width:720px}.two-column{display:grid;grid-template-columns:minmax(270px,.82fr) minmax(0,1.25fr);gap:16px}.surface-card{padding:22px;min-width:0}.surface-card h3{font-size:14px;letter-spacing:-.01em;margin:0 0 9px}.surface-card p.muted{margin:4px 0 18px}.muted{color:#91acbc;font-size:11px;line-height:1.6}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.form-stack{display:flex;flex-direction:column;gap:9px}.form-stack label,.field label{font-size:11px;color:#b3c6d4;font-weight:700}.form-stack label:not(:first-child){margin-top:7px}.app-shell input,.app-shell select{border:1px solid #31536a;border-radius:7px;background:#091e31;color:#e5f3f7;padding:12px;width:100%;min-height:41px;min-width:0;accent-color:#27d9c2}.app-shell input::placeholder{color:#69889b}.form-stack select{appearance:auto}.disclaimer-mini{margin-top:18px;background:#152d3d;border:1px solid #315067;color:#8eabbd;border-radius:7px;padding:12px;font-size:10.5px;line-height:1.6}.mini-badge{background:#16423f;color:#5bdecc;border:1px solid #296962;border-radius:5px;padding:5px 9px;font-size:10px;font-weight:850}.empty-message{min-height:235px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#8ca6ba;text-align:center;padding:26px;font-size:12px;line-height:1.6}.empty-symbol{font-size:40px;color:#377780}.route-route{margin-top:18px;display:flex;flex-direction:column;gap:0}.route-node{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:22px}.route-node:last-child{padding-bottom:0}.route-node:not(:last-child):before{content:'';position:absolute;left:12px;top:23px;height:calc(100% - 21px);border-left:2px dashed #2e8a8d}.route-circle{height:26px;width:26px;border-radius:50%;background:#185e63;border:2px solid #39ddce;display:grid;place-items:center;flex:0 0 26px;color:#b2fff0;font-size:10px;font-weight:800;z-index:1}.route-node strong{font-size:12px;display:block;margin:2px 0 5px}.route-node small{display:block;font-size:10px;color:#86a6b7}.route-mode{background:#162f43;color:#6cddcf;padding:3px 8px;border:1px solid #2d6770;border-radius:5px;margin-top:8px;display:inline-block;font-size:10px}.route-summary{border-top:1px solid #2c465a;margin-top:20px;padding-top:15px;color:#96b6c6;font-size:11px;line-height:1.7}.cargo-create{margin-bottom:16px}.cargo-create[hidden]{display:none}.fields-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field{display:flex;flex-direction:column;gap:8px}.full-width{grid-column:1/-1}.form-actions{display:flex;align-items:center;gap:15px}.form-notice{color:#76e4ce;font-size:11px;margin-top:8px;min-height:16px}.table-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:17px}.table-toolbar h3{margin:0 0 7px}.table-toolbar small{color:#82a0b3;font-size:10.5px}.toolbar-filters{display:flex;gap:8px;align-items:center}.toolbar-filters input{width:230px}.toolbar-filters select{width:128px}.table-scroll{overflow-x:auto}table{border-collapse:collapse;text-align:left;width:100%;font-size:11px;min-width:690px}th{color:#7798ad;font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;padding:13px 11px;background:#142d43;border-bottom:1px solid #304c63}td{padding:15px 11px;border-bottom:1px solid #263f53;vertical-align:middle;color:#d8e9f0}td small{display:block;color:#82a2b6;font-size:10px;margin-top:5px}tbody tr:last-child td{border-bottom:0}.cargo-id{font-weight:850;color:#55dfcf}.cargo-route{font-weight:650}.cargo-badge{font-size:10px;display:inline-flex;padding:4px 7px;background:#173f4b;color:#69decd;border-radius:5px}.demo-badge{background:#273d50;color:#a4b9ca}.delete-btn{color:#e9a8ab;background:none;border:1px solid #5b4051;border-radius:6px;padding:6px 9px;font-size:10px}.delete-btn:hover{background:#573443}.table-empty{padding:25px;color:#91adbd;text-align:center;font-size:12px}.tracking-layout{grid-template-columns:minmax(250px,.75fr) minmax(0,1.3fr)}.demo-id{margin-top:21px;border-top:1px solid #29465a;padding-top:17px;color:#91aebf;font-size:11px}.demo-id button{background:none;border:0;color:#54e7cd;font-weight:750;padding:0;margin-left:4px}.milestone{position:relative;padding:0 0 23px 31px;border-left:2px solid #285366;margin-left:10px}.milestone:last-child{border-left-color:transparent}.milestone:before{position:absolute;content:'';left:-7px;top:1px;width:12px;height:12px;background:#2edbc4;border-radius:50%;box-shadow:0 0 0 5px #17434a}.milestone.waiting:before{background:#658697;box-shadow:0 0 0 5px #223d4f}.milestone strong{display:block;font-size:12px}.milestone p{margin:6px 0 0;color:#87a7b8;font-size:11px;line-height:1.5}.milestone .time{color:#59d7c7;font-size:10px;margin-bottom:6px}.tracking-warning{font-size:10px;color:#e1b779;padding:10px;border:1px solid #67593e;background:#373329;border-radius:6px;margin-top:12px;line-height:1.6}.docs-layout{grid-template-columns:minmax(300px,1.1fr) minmax(250px,.85fr)}.progress-track{background:#223d50;border-radius:20px;height:8px;overflow:hidden;margin:18px 0}.progress-fill{height:100%;background:#28dbc2;width:0;transition:width .2s}.doc-row{display:flex;gap:12px;padding:15px 0;border-bottom:1px solid #274156;align-items:flex-start}.doc-row:last-child{border-bottom:0}.doc-row input{height:18px;width:18px;flex:0 0 18px;margin:2px 0 0}.doc-row strong{display:block;font-size:12px;margin-bottom:5px}.doc-row small{color:#89a7b7;font-size:10.5px;line-height:1.6}.integration-list>div{padding:16px 0;border-bottom:1px solid #284255}.integration-list>div:last-child{border:0}.integration-list strong{font-size:12px}.status-pending{font-size:9px;font-weight:800;float:right;color:#f0c48a;background:#433b30;padding:4px 6px;border-radius:4px}.integration-list p{color:#8daabc;font-size:10.5px;line-height:1.7;margin:9px 0 0}.partners-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.partner-card{background:#102439;border:1px solid #2b4558;border-radius:11px;padding:23px;min-height:186px}.partner-type{color:#4ce0cb;font-weight:850;font-size:9px;letter-spacing:.12em}.partner-card h3{font-size:15px;margin:14px 0 11px}.partner-card p{color:#91acbf;font-size:11px;line-height:1.6;min-height:56px}.partner-locations{color:#b8ced6;font-size:10px;margin-top:13px;border-top:1px solid #284557;padding-top:11px}.note-card{margin-top:18px;display:flex;gap:14px}.note-card .feature-symbol{flex:0 0 32px}.note-card strong{font-size:12px}.note-card p{color:#8fabba;font-size:11px;line-height:1.7;margin:8px 0}.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}.admin-number{font-size:42px;font-weight:850;letter-spacing:-.07em;margin:12px 0;color:#62e8d4}.admin-grid .muted{margin-bottom:20px}.roadmap{margin-top:17px}.roadmap>div{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #2b4455;align-items:center}.roadmap>div:last-child{border-bottom:0}.roadmap span{font-size:18px;color:#39cbb8;font-weight:800}.roadmap strong{font-size:12px;min-width:170px}.roadmap small{font-size:10px;color:#8cabbc;flex:1}.roadmap b{font-size:9px;color:#d2af71;text-align:right}.page-footer{border-top:1px solid #223b4e;display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;color:#65869c;font-size:10px;padding:20px 0;margin-top:35px}.toast{position:fixed;bottom:22px;right:23px;z-index:50;background:#1b504f;border:1px solid #39b9aa;color:#e1fff7;padding:14px 20px;border-radius:9px;box-shadow:0 10px 30px #0006;font-size:12px;max-width:350px}.toast[hidden]{display:none}.confirm-dialog{background:#102438;color:#edf7f9;border:1px solid #4d7182;border-radius:12px;max-width:min(450px,calc(100% - 32px));padding:25px}.confirm-dialog::backdrop{background:#02070bc9}.confirm-dialog h3{margin:0 0 12px}.confirm-dialog p{color:#a3becd;font-size:12px;line-height:1.7}.confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+@media(max-width:1250px){.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.app-shell{grid-template-columns:185px minmax(0,1fr)}.sidebar{padding:19px 10px}.brand{padding:0 5px}.brand strong{font-size:11px}.brand-icon{width:35px;height:35px}.topbar{padding:0 20px}main{padding:22px}.hero{padding:25px}.hero-mesh{width:45%;opacity:.55}.corridor-step strong{font-size:10px}.corridor-step small{font-size:9px}.two-column{grid-template-columns:1fr}.mode-line small{margin-left:0}}
+@media(max-width:650px){.app-shell{display:block}.sidebar{height:auto;position:relative;overflow:visible;padding:14px 16px 0}.brand{margin-bottom:11px}.workspace-indicator,.nav-heading,.sidebar-bottom,.sidebar-footer{display:none}.main-nav{display:none}.sidebar.mobile-open .main-nav{display:grid}.sidebar.mobile-open{padding-bottom:16px}.sidebar.mobile-open .second-heading{display:block}.topbar{height:53px;padding:0 16px}.mobile-menu{display:inline-block;background:#18364a;border:1px solid #2b5267;color:#d4eded;padding:6px 10px;border-radius:6px}.top-status{font-size:10px}.top-divider{display:none}.avatar{height:28px;width:28px;font-size:10px}.breadcrumb{font-size:9px}main{padding:17px 14px}.hero{padding:25px 19px;min-height:340px}.hero h1{font-size:32px}.hero p{font-size:12px}.hero-mesh{width:70%;opacity:.23}.intro-line{font-size:8.5px}.today-tag{display:none}.stats-grid{gap:8px}.stat-card{padding:12px 9px;gap:8px}.stat-icon{height:28px;width:28px;font-size:15px;flex-shrink:0}.stat-card strong{font-size:23px}.stat-card span{font-size:9px}.stat-card small{font-size:8px}.feature-grid,.partners-grid,.admin-grid{grid-template-columns:1fr}.feature-card{min-height:130px}.section-heading h2{font-size:18px}.corridor-card{padding:16px 11px}.corridor-head strong{font-size:11px}.corridor-head small{font-size:9px}.corridor-step small{display:none}.corridor-step strong{font-size:8.5px}.corridor-circle{width:26px;height:26px;margin-bottom:9px}.corridor-steps:before{top:13px}.mode-line{gap:10px;font-size:9px}.page-title-row{flex-wrap:wrap}.page-title-row h1{font-size:24px}.fields-grid{grid-template-columns:1fr}.table-toolbar{flex-direction:column;align-items:stretch}.toolbar-filters{flex-wrap:wrap}.toolbar-filters input{flex:1;min-width:170px}.toolbar-filters select{width:110px}.surface-card{padding:17px}.roadmap>div{align-items:flex-start;flex-wrap:wrap;gap:8px}.roadmap strong{min-width:0}.roadmap small{flex-basis:100%}.roadmap b{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+  </style>
+
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand" aria-label="Caspian Logistics">
+      <div class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="35" height="35"><path d="M7 27L17 11l8 11 8-12" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 33h26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+      <div><strong>CASPIAN<span>LOGISTICS</span></strong><small>TRANSPORT NETWORK</small></div>
+    </div>
+    <div class="workspace-indicator"><span class="workspace-spot"></span> DEMO WORKSPACE <span class="workspace-version">v0.2</span></div>
+    <p class="nav-heading">ПЛАТФОРМА</p>
+    <nav class="main-nav" aria-label="Основна навигация">
+      <button class="nav-link active" data-page="home" aria-current="page"><span class="nav-icon">⌂</span><span>Табло</span></button>
+      <button class="nav-link" data-page="routes"><span class="nav-icon">⌁</span><span>Планиране</span></button>
+      <button class="nav-link" data-page="cargo"><span class="nav-icon">▣</span><span>Борса товари</span><span class="nav-number" id="nav-cargo-count">3</span></button>
+      <button class="nav-link" data-page="tracking"><span class="nav-icon">◎</span><span>Проследяване</span></button>
+      <button class="nav-link" data-page="documents"><span class="nav-icon">▤</span><span>Документи</span></button>
+      <button class="nav-link" data-page="partners"><span class="nav-icon">♧</span><span>Партньори</span></button>
+    </nav>
+    <p class="nav-heading second-heading">УПРАВЛЕНИЕ</p>
+    <nav class="main-nav"><button class="nav-link" data-page="admin"><span class="nav-icon">▦</span><span>Управление</span></button></nav>
+    <div class="sidebar-bottom">
+      <div class="bottom-icon">i</div>
+      <div><strong>Тестова версия</strong><p>Без плащания, реални резервации и свързани транспортни оператори.</p></div>
+    </div>
+    <div class="sidebar-footer">© 2026 Caspian Logistics<br>Independent project · Concept MVP</div>
+  </aside>
+
+  <div class="page-content">
+    <header class="topbar">
+      <div class="top-left"><button class="mobile-menu" id="mobile-menu" aria-label="Отвори менюто" aria-expanded="false">☰</button><div class="breadcrumb">WORKSPACE <span>/</span> <strong id="breadcrumb-title">ТАБЛО</strong></div></div>
+      <div class="top-actions"><span class="top-status"><span class="pulse-dot"></span> Демо среда</span><span class="top-divider"></span><span class="avatar" title="Демонстрационен профил">CL</span></div>
+    </header>
+    <main id="main-content">
+      <section class="page active" data-panel="home">
+        <div class="intro-line"><span>СРЕДЕН КОРИДОР · ЕВРОПА — ЦЕНТРАЛНА АЗИЯ</span><span class="today-tag" id="today-label"></span></div>
+        <div class="hero">
+          <div class="hero-mesh" aria-hidden="true"><svg viewBox="0 0 490 330" preserveAspectRatio="xMidYMid slice"><defs><pattern id="mesh" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" stroke="#63d7d0" stroke-opacity=".11" stroke-width=".7" fill="none"/></pattern></defs><rect width="490" height="330" fill="url(#mesh)"/><path d="M60 241C150 180 130 88 254 130s87 123 200 15" stroke="#29dcca" stroke-width="3" stroke-dasharray="6 8" fill="none" opacity=".7"/><circle cx="60" cy="241" r="9" fill="#2ce0c4"/><circle cx="254" cy="130" r="9" fill="#2ce0c4"/><circle cx="454" cy="145" r="9" fill="#2ce0c4"/><circle cx="60" cy="241" r="19" stroke="#23c1b4" stroke-width="1" fill="none" opacity=".7"/><circle cx="254" cy="130" r="19" stroke="#23c1b4" stroke-width="1" fill="none" opacity=".7"/></svg></div>
+          <div class="hero-content"><span class="eyebrow"><span class="small-square"></span> MULTIMODAL LOGISTICS PLATFORM</span><h1>Свързваме пазари.<br><em>Движим възможности.</em></h1><p>Една платформа за сухопътен, железопътен и морски транспорт по Каспийския коридор. От първата заявка до последния логистичен етап.</p><div class="hero-actions"><button class="btn btn-primary" data-go="routes">Планирай маршрут <span>↗</span></button><button class="btn btn-ghost" data-go="cargo">Разгледай товари</button></div></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon">▣</div><div><span>Товарни заявки</span><strong id="stat-cargo">0</strong><small>Само локални и демо записи</small></div></div>
+          <div class="stat-card"><div class="stat-icon">⌁</div><div><span>Транспортни режими</span><strong>03</strong><small>Авто · ЖП · Ферибот</small></div></div>
+          <div class="stat-card"><div class="stat-icon">◫</div><div><span>Хъбове в схемата</span><strong>07</strong><small>Примерни логистични възли</small></div></div>
+          <div class="stat-card"><div class="stat-icon">◎</div><div><span>Активни интеграции</span><strong>00</strong><small>Не са свързани доставчици</small></div></div>
+        </div>
+        <div class="section-heading"><div><span class="section-kicker">NETWORK OVERVIEW</span><h2>Транспортен коридор</h2></div><button class="text-link" data-go="routes">Планиране ↗</button></div>
+        <div class="corridor-card"><div class="corridor-head"><div><strong>Примерна верига</strong><small>България → Грузия → Азербайджан → Казахстан</small></div><span class="outline-tag">СХЕМАТИЧНО</span></div>
+          <div class="corridor-steps"><div class="corridor-step"><span class="corridor-circle">1</span><strong>България</strong><small>Начална точка</small></div><div class="corridor-step"><span class="corridor-circle">2</span><strong>Поти</strong><small>Черно море</small></div><div class="corridor-step"><span class="corridor-circle">3</span><strong>Алат / Баку</strong><small>Каспийско море</small></div><div class="corridor-step"><span class="corridor-circle">4</span><strong>Курик</strong><small>Казахстан</small></div><div class="corridor-step"><span class="corridor-circle">5</span><strong>Алмати</strong><small>Дестинация</small></div></div>
+          <div class="mode-line"><span><i class="legend-dot road"></i> Автомобилен</span><span><i class="legend-dot sea"></i> Морски</span><span><i class="legend-dot rail"></i> Железопътен</span><small>Няма потвърдени разписания и капацитети</small></div>
+        </div>
+        <div class="section-heading"><div><span class="section-kicker">OPERATIONS</span><h2>Основни функционалности</h2></div></div>
+        <div class="feature-grid"><button class="feature-card" data-go="routes"><span class="feature-symbol">⌁</span><strong>Мултимодално планиране</strong><p>Разгледай примерни транспортни вериги и точки за прехвърляне.</p><span class="feature-arrow">↗</span></button><button class="feature-card" data-go="cargo"><span class="feature-symbol">▣</span><strong>Борса за товари</strong><p>Регистрирай демо заявки с размери, тегло и направление.</p><span class="feature-arrow">↗</span></button><button class="feature-card" data-go="tracking"><span class="feature-symbol">◎</span><strong>Етапно проследяване</strong><p>Следи логистични събития, а не само GPS координати.</p><span class="feature-arrow">↗</span></button><button class="feature-card" data-go="documents"><span class="feature-symbol">▤</span><strong>Дигитални документи</strong><p>Контролен списък за митнически и превозни документи.</p><span class="feature-arrow">↗</span></button></div>
+      </section>
+
+      <section class="page" data-panel="routes">
+        <div class="page-title-row"><div><span class="section-kicker">ROUTE ENGINE</span><h1>Планиране на маршрути</h1><p>Избери направление. Демото показва предварително конфигурирани възможни връзки, не реални разписания.</p></div><span class="outline-tag">DEMO ROUTING</span></div>
+        <div class="two-column route-layout">
+          <div class="surface-card"><h3>Параметри на маршрута</h3><p class="muted">Начален и краен логистичен възел</p><form id="route-form" class="form-stack"><label for="route-start">От</label><select id="route-start" required></select><label for="route-end">До</label><select id="route-end" required></select><label for="route-preference">Предпочитание</label><select id="route-preference"><option value="balanced">Всички транспортни режими</option><option value="road">Без железопътен превоз</option><option value="rail">Предимство за железопътен превоз</option></select><button type="submit" class="btn btn-primary btn-wide">Изчисли примерна верига ↗</button></form><div class="disclaimer-mini">Маршрутите са демонстрационни и не включват тарифи, гранично време, наличен капацитет или актуални ограничения.</div></div>
+          <div class="surface-card route-results"><div class="panel-head"><h3>Резултат</h3><span class="mini-badge">СХЕМА</span></div><div id="route-output" class="empty-message"><div class="empty-symbol">⌁</div>Избери параметри и натисни „Изчисли примерна верига“.</div></div>
+        </div>
+      </section>
+
+      <section class="page" data-panel="cargo">
+        <div class="page-title-row"><div><span class="section-kicker">FREIGHT EXCHANGE</span><h1>Борса за товари</h1><p>Управление на примерни и локално създадени товарни заявки.</p></div><button class="btn btn-primary" id="toggle-cargo-form">+ Нова заявка</button></div>
+        <div class="surface-card cargo-create" id="cargo-form-wrap" hidden><div class="panel-head"><h3>Създай товарна заявка</h3><button class="text-link" type="button" id="close-cargo-form">Затвори ×</button></div><form id="cargo-form" class="fields-grid">
+          <div class="field"><label for="cargo-origin">Товарене *</label><input id="cargo-origin" name="origin" maxlength="90" placeholder="Пловдив, България" required></div>
+          <div class="field"><label for="cargo-destination">Разтоварване *</label><input id="cargo-destination" name="destination" maxlength="90" placeholder="Алмати, Казахстан" required></div>
+          <div class="field"><label for="cargo-weight">Тегло, кг *</label><input id="cargo-weight" name="weight" type="number" min="1" max="30000" step="1" required></div>
+          <div class="field"><label for="cargo-volume">Обем, м³ *</label><input id="cargo-volume" name="volume" type="number" min="0.01" max="200" step="0.01" required></div>
+          <div class="field"><label for="cargo-pallets">Брой палети</label><input id="cargo-pallets" name="pallets" type="number" min="0" max="100" step="1" value="0"></div>
+          <div class="field"><label for="cargo-date">Желана дата *</label><input id="cargo-date" name="date" type="date" required></div>
+          <div class="field"><label for="cargo-mode">Тип заявка *</label><select id="cargo-mode" name="mode" required><option value="LTL">Групаж (LTL)</option><option value="FTL">Цял камион (FTL)</option><option value="CONTAINER">Контейнер</option></select></div>
+          <div class="field"><label for="cargo-description">Описание на стоката</label><input id="cargo-description" name="description" maxlength="160" placeholder="Напр. машинни части"></div>
+          <div class="full-width form-actions"><button class="btn btn-primary" type="submit">Запази локално</button><span class="muted">Не се публикува в интернет.</span></div>
+        </form><div class="form-notice" id="cargo-form-notice" role="status" aria-live="polite"></div></div>
+        <div class="surface-card cargo-list"><div class="table-toolbar"><div><h3>Списък със заявки</h3><small>Демо записите са отделени от твоите записи.</small></div><div class="toolbar-filters"><input type="search" id="cargo-search" placeholder="Търси по маршрут, товар..." aria-label="Търси заявки"><select id="cargo-filter" aria-label="Филтър тип"><option value="all">Всички</option><option value="LTL">LTL</option><option value="FTL">FTL</option><option value="CONTAINER">Контейнер</option></select></div></div><div class="table-scroll"><table><thead><tr><th>Заявка</th><th>Маршрут</th><th>Товар</th><th>Тип</th><th>Статус</th><th></th></tr></thead><tbody id="cargo-body"></tbody></table></div><div id="cargo-empty" class="table-empty" hidden>Няма заявки по избраните критерии.</div></div>
+      </section>
+
+      <section class="page" data-panel="tracking">
+        <div class="page-title-row"><div><span class="section-kicker">MILESTONE VISIBILITY</span><h1>Проследяване</h1><p>Прототип на хронология от транспортни събития и пристанищни етапи.</p></div><span class="outline-tag">НЕ Е LIVE GPS</span></div>
+        <div class="two-column tracking-layout"><div class="surface-card"><h3>Проверка на товар</h3><p class="muted">Въведи демонстрационния номер по-долу.</p><form id="tracking-form" class="form-stack"><label for="tracking-number">Номер на пратка</label><input id="tracking-number" placeholder="DEMO-0001" value="DEMO-0001" required><button class="btn btn-primary btn-wide" type="submit">Провери статус ↗</button></form><div class="demo-id">Пробвай с <button type="button" id="fill-demo-tracking">DEMO-0001</button></div></div><div class="surface-card"><div class="panel-head"><h3>История на събитията</h3><span class="mini-badge">DEMO</span></div><div id="tracking-output" class="empty-message">Въведи номер, за да видиш примерна хронология.</div></div></div>
+      </section>
+
+      <section class="page" data-panel="documents">
+        <div class="page-title-row"><div><span class="section-kicker">DOCUMENT WORKSPACE</span><h1>Документи и митници</h1><p>Контролен списък за предварителна подготовка. Това не са електронни товарителници.</p></div><button class="btn btn-ghost smaller" id="reset-docs">Нулирай списъка</button></div>
+        <div class="two-column docs-layout"><div class="surface-card"><div class="panel-head"><h3>Подготовка на превоза</h3><span id="docs-fraction" class="mini-badge">0 / 6</span></div><div class="progress-track"><div id="docs-progress" class="progress-fill"></div></div><div id="docs-checklist" class="docs-checklist"></div></div><div class="surface-card"><h3>Електронни системи</h3><div class="integration-list"><div><strong>e-CMR</strong><span class="status-pending">Не е свързано</span><p>Нужни са съвместим доставчик, правни проверки и електронни подписи.</p></div><div><strong>e-TIR</strong><span class="status-pending">Не е свързано</span><p>Интеграция през съответните национални и международни процеси.</p></div><div><strong>Предварително деклариране</strong><span class="status-pending">Не е свързано</span><p>Предстоящо моделиране на документи и данни за митнически брокери.</p></div></div></div></div>
+      </section>
+
+      <section class="page" data-panel="partners">
+        <div class="page-title-row"><div><span class="section-kicker">PARTNER NETWORK</span><h1>Мрежа от партньори</h1><p>Структура за бъдещ каталог на оператори, складове, брокери и терминали.</p></div><span class="outline-tag">КОНЦЕПТУАЛНИ КАТЕГОРИИ</span></div>
+        <div class="partners-grid" id="partners-grid"></div><div class="surface-card note-card"><span class="feature-symbol">!</span><div><strong>Партньорската мрежа все още не е свързана.</strong><p>Това са категории и градове за обхват, не потвърдени фирми, свободни складови площи или достъпни фериботни места.</p></div></div>
+      </section>
+
+      <section class="page" data-panel="admin">
+        <div class="page-title-row"><div><span class="section-kicker">DEMO MANAGEMENT</span><h1>Управление на прототипа</h1><p>Контрол на локалните данни и преглед на функционалния статус.</p></div><span class="outline-tag">ЛОКАЛЕН РЕЖИМ</span></div>
+        <div class="admin-grid"><div class="surface-card"><h3>Твоите заявки</h3><div class="admin-number" id="admin-owned">0</div><p class="muted">Записани в браузъра на това устройство. Няма общ сървър или потребителски акаунт.</p><button class="btn btn-ghost smaller" id="export-json">Експорт на заявки (JSON) ↧</button></div><div class="surface-card"><h3>Данни и поверителност</h3><p class="muted">При тази версия информацията се съхранява в localStorage на браузъра. Не въвеждай чувствителни фирмени или лични данни.</p><button class="btn btn-danger smaller" id="clear-local">Изтрий локалните демо данни</button></div></div>
+        <div class="surface-card"><h3>Път към реалната система</h3><div class="roadmap"><div><span>01</span><strong>Потребители и роли</strong><small>Регистрация, фирмени профили, администратори, верификация</small><b>ПРЕДСТОИ</b></div><div><span>02</span><strong>Данни и заявки</strong><small>API, база данни, права, история на статуса</small><b>ПРЕДСТОИ</b></div><div><span>03</span><strong>Оператори и резервации</strong><small>Фериботи, жп услуги, терминали, тарифи и капацитет</small><b>ЗАВИСИ ОТ ПАРТНЬОРИ</b></div><div><span>04</span><strong>Транспортни документи</strong><small>e-CMR, e-TIR, валидиране, електронни подписи</small><b>ЗАВИСИ ОТ ПАРТНЬОРИ</b></div></div></div>
+      </section>
+      <footer class="page-footer"><span>CASPIAN LOGISTICS · Независим прототип v0.2</span><span>Само демонстрационни данни · Не е транспортна услуга</span></footer>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<dialog id="confirm-dialog" class="confirm-dialog"><form method="dialog"><h3>Изтриване на локални данни</h3><p>Всички добавени от теб товарни заявки и отметки на документите ще бъдат изтрити от този браузър. Демо записите ще останат.</p><div class="confirm-actions"><button value="cancel" class="btn btn-ghost">Отказ</button><button value="confirm" class="btn btn-danger">Изтрий</button></div></form></dialog>
+<script>
+/**
+ * CASPIAN LOGISTICS — independent, dependency-free demo frontend.
+ * All records marked DEMO are synthetic. User records stay on the current device.
+ * No fetch, backend, payments, accounts, tracking provider or bookings are connected.
+ */
+(() => {
+  'use strict';
+  const STORAGE_CARGO = 'caspian-logistics-v02:cargo';
+  const STORAGE_DOCS = 'caspian-logistics-v02:docs';
+  const $ = (selector, context = document) => context.querySelector(selector);
+  const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+
+  const demoCargo = Object.freeze([
+    { id:'DEMO-101', origin:'Пловдив, България', destination:'Алмати, Казахстан', weight:1240, volume:6.5, pallets:5, mode:'LTL', description:'Машинни компоненти', date:'2026-12-04', demo:true },
+    { id:'DEMO-102', origin:'София, България', destination:'Баку, Азербайджан', weight:14300, volume:68, pallets:21, mode:'FTL', description:'Промишлено оборудване', date:'2026-12-11', demo:true },
+    { id:'DEMO-103', origin:'Поти, Грузия', destination:'Актау, Казахстан', weight:7900, volume:32, pallets:0, mode:'CONTAINER', description:'Опаковани стоки', date:'2026-12-16', demo:true }
+  ]);
+  const docs = [
+    ['invoice','Търговска фактура','Проверка на данните за изпращач, получател и стоката.'],
+    ['packing','Опаковъчен лист','Количество, тегло, брой опаковки, маркировки.'],
+    ['cmr','Товарителница / e-CMR','Подготовка според режима и приложимите правила.'],
+    ['tir','Митнически документи / TIR','Проверка на приложимост и изисквания по направление.'],
+    ['terminal','Терминални документи','Изисквания на пристанища, оператори и транзитни хъбове.'],
+    ['insurance','Застраховка / разрешителни','Според товара, страните и условията на транспорта.']
+  ];
+  const partners = [
+    ['WAREHOUSING','Складове и консолидация','Виртуални складови локации и бъдещи обяви за налични площи.','Поти · Батуми · Баку'],
+    ['FERRY OPERATORS','Фериботен транспорт','Разписания, заявки за места и статуса на морските преходи — след интеграция.','Алат · Курик · Актау'],
+    ['RAIL OPERATORS','Железопътни оператори','Партньорска мрежа за контейнери, вагони и претоварване.','Азербайджан · Казахстан'],
+    ['CUSTOMS','Митнически брокери','Фирмени профили и проверка на документацията за граници.','Баку · Тбилиси · Алмати'],
+    ['ROAD FREIGHT','Автомобилен транспорт','FTL, LTL, първа и последна миля, свободен капацитет.','Европа · Кавказ · Централна Азия'],
+    ['LOGISTICS HUBS','Терминали и хъбове','Статуси за пристигане, претоварване и напускане на терминали.','Поти · Алат · Курик']
+  ];
+  const nodes = ['Пловдив','София','Поти','Баку','Алат','Курик','Актау','Алмати','Туркменбаши','Ташкент'];
+  const edges = [
+    ['Пловдив','София','road','Автомобилен'],
+    ['Пловдив','Поти','road','Автомобилен през Турция и Грузия'],
+    ['София','Поти','road','Автомобилен през Турция и Грузия'],
+    ['Поти','Баку','rail','Железопътен транзит през Грузия'],
+    ['Поти','Баку','road','Автомобилен транзит през Грузия'],
+    ['Баку','Алат','road','Автомобилен трансфер към пристанище'],
+    ['Алат','Курик','sea','Ферибот / морски преход'],
+    ['Алат','Актау','sea','Ферибот / морски преход — за потвърждение'],
+    ['Алат','Туркменбаши','sea','Ферибот / морски преход'],
+    ['Курик','Алмати','rail','Железопътен'],
+    ['Курик','Алмати','road','Автомобилен'],
+    ['Актау','Алмати','rail','Железопътен'],
+    ['Актау','Алмати','road','Автомобилен'],
+    ['Туркменбаши','Ташкент','rail','Железопътен транзит през Узбекистан'],
+    ['Алмати','Ташкент','road','Автомобилен']
+  ];
+  const pageTitles = { home:'ТАБЛО', routes:'ПЛАНИРАНЕ', cargo:'БОРСА ТОВАРИ', tracking:'ПРОСЛЕДЯВАНЕ', documents:'ДОКУМЕНТИ', partners:'ПАРТНЬОРИ', admin:'УПРАВЛЕНИЕ' };
+
+  function storedArray(key) {
+    try { const value = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(value) ? value : []; }
+    catch { return []; }
+  }
+  function storedObject(key) {
+    try { const value = JSON.parse(localStorage.getItem(key) || '{}'); return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; }
+    catch { return {}; }
+  }
+  let userCargo = storedArray(STORAGE_CARGO).filter(r => r && typeof r === 'object' && r.demo !== true && typeof r.id === 'string');
+  let docChecks = storedObject(STORAGE_DOCS);
+  const saveCargo = () => { try { localStorage.setItem(STORAGE_CARGO, JSON.stringify(userCargo)); return true; } catch { notify('Записът не е позволен от браузъра.'); return false; } };
+  const saveDocs = () => { try { localStorage.setItem(STORAGE_DOCS, JSON.stringify(docChecks)); } catch { notify('Браузърът не позволява запазване на отметки.'); } };
+  const textNode = (tag, content, className) => { const el=document.createElement(tag); if(className) el.className=className; el.textContent=content; return el; };
+  const notify = message => {
+    const toast = $('#toast'); toast.textContent = message; toast.hidden = false;
+    clearTimeout(notify._timer); notify._timer = setTimeout(() => toast.hidden=true, 3600);
+  };
+  const longDate = date => {
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return '—';
+    const parts = date.split('-').map(Number);
+    const dateObj = new Date(parts[0], parts[1]-1, parts[2]);
+    if(Number.isNaN(dateObj.getTime())) return '—';
+    return new Intl.DateTimeFormat('bg-BG',{day:'2-digit',month:'short',year:'numeric'}).format(dateObj);
+  };
+  const dateToday = () => { const d=new Date(); const n=x=>String(x).padStart(2,'0'); return `${d.getFullYear()}-${n(d.getMonth()+1)}-${n(d.getDate())}`; };
+  function navigate(page) {
+    if(!pageTitles[page]) return;
+    $$('.page').forEach(el=>el.classList.toggle('active',el.dataset.panel===page));
+    $$('.nav-link').forEach(el=>{
+      const isActive=el.dataset.page===page; el.classList.toggle('active',isActive);
+      if(isActive)el.setAttribute('aria-current','page'); else el.removeAttribute('aria-current');
+    });
+    $('#breadcrumb-title').textContent=pageTitles[page];
+    $('#sidebar').classList.remove('mobile-open'); $('#mobile-menu').setAttribute('aria-expanded','false');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  $$('.nav-link').forEach(el=>el.addEventListener('click',()=>navigate(el.dataset.page)));
+  $$('[data-go]').forEach(el=>el.addEventListener('click',()=>navigate(el.dataset.go)));
+  $('#mobile-menu').addEventListener('click', () => {
+    const open=$('#sidebar').classList.toggle('mobile-open');
+    $('#mobile-menu').setAttribute('aria-expanded',String(open));
+  });
+  const now = new Date();
+  $('#today-label').textContent=new Intl.DateTimeFormat('bg-BG',{day:'numeric',month:'long',year:'numeric'}).format(now);
+
+  function initRoutes(){
+    for(const id of ['#route-start','#route-end']) {
+      const select=$(id);
+      for(const n of nodes) select.add(new Option(n,n));
+    }
+    $('#route-start').value='Пловдив'; $('#route-end').value='Алмати';
+    $('#route-form').addEventListener('submit',e=>{e.preventDefault(); calculateRoute();});
+  }
+  function calculateRoute(){
+    const start=$('#route-start').value,end=$('#route-end').value,preference=$('#route-preference').value,output=$('#route-output');
+    output.replaceChildren();
+    if(start===end){output.append(textNode('p','Началната точка и дестинацията съвпадат.','muted'));return;}
+    const distances = new Map(nodes.map(n=>[n,Infinity])); const prev=new Map(); const visited=new Set();
+    distances.set(start,0);
+    while(visited.size<nodes.length){
+      const current=nodes.filter(n=>!visited.has(n)).reduce((a,b)=>distances.get(b)<distances.get(a)?b:a, nodes.find(n=>!visited.has(n)) || nodes[0]);
+      if(!current || !Number.isFinite(distances.get(current))) break;
+      if(current===end) break;
+      visited.add(current);
+      for(const [a,b,mode,description] of edges){
+        if(preference==='road' && mode==='rail') continue;
+        const next=a===current?b:b===current?a:null;
+        if(!next || visited.has(next)) continue;
+        const penalty=preference==='rail' && mode==='road' ? 0.75 : 0;
+        const candidate=distances.get(current)+1+penalty;
+        if(candidate<distances.get(next)) {distances.set(next,candidate);prev.set(next,{from:current,mode,description});}
+      }
+    }
+    if(!prev.has(end)){output.append(textNode('p','Няма демонстрационна връзка за избраното направление.','muted'));return;}
+    const route=[];let cursor=end;
+    while(cursor!==start && prev.has(cursor)){const segment=prev.get(cursor);route.unshift({city:cursor,mode:segment.mode,description:segment.description});cursor=segment.from;}
+    if(cursor!==start){output.append(textNode('p','Маршрутът не може да се изгради.','muted'));return;}
+    route.unshift({city:start});
+    const title=textNode('div',`${start} → ${end}`,'cargo-route');output.append(title);
+    const nodesDiv=document.createElement('div');nodesDiv.className='route-route';
+    route.forEach((stop,i)=>{
+      const row=document.createElement('div');row.className='route-node';
+      row.append(textNode('span',i+1,'route-circle'));
+      const body=document.createElement('div');body.append(textNode('strong',stop.city));
+      if(i===0) body.append(textNode('small','Начален логистичен възел'));
+      else body.append(textNode('small',stop.description));
+      if(i>0) body.append(textNode('span',({road:'Авто',rail:'ЖП',sea:'Море'})[stop.mode],'route-mode'));
+      row.append(body);nodesDiv.append(row);
+    });
+    output.append(nodesDiv,textNode('div',`${route.length} логистични точки · примерна последователност, без изчисление на транзитно време и цена. Проверка на реалния маршрут и разрешителните е задължителна.`,'route-summary'));
+  }
+
+  function allCargo() { return [...userCargo, ...demoCargo]; }
+  function refreshCounters(){
+    const all=allCargo();$('#stat-cargo').textContent=String(all.length).padStart(2,'0');$('#nav-cargo-count').textContent=String(all.length);$('#admin-owned').textContent=String(userCargo.length);
+  }
+  function renderCargo(){
+    const needle=$('#cargo-search').value.trim().toLocaleLowerCase('bg-BG');
+    const filter=$('#cargo-filter').value;
+    const filtered=allCargo().filter(c=> (filter==='all'||c.mode===filter) && (!needle || [c.id,c.origin,c.destination,c.description,c.mode].join(' ').toLocaleLowerCase('bg-BG').includes(needle)));
+    const body=$('#cargo-body');body.replaceChildren();
+    $('#cargo-empty').hidden=filtered.length!==0;
+    for(const c of filtered){
+      const tr=document.createElement('tr');
+      const id=document.createElement('td');id.append(textNode('span',c.id,'cargo-id'),textNode('small',c.demo?'Демо запис':'Локален запис'));
+      const route=document.createElement('td');route.append(textNode('span',`${c.origin} → ${c.destination}`,'cargo-route'),textNode('small',`Желана дата: ${longDate(c.date)}`));
+      const cargo=document.createElement('td');const weight=Number(c.weight)||0,volume=Number(c.volume)||0;
+      cargo.append(textNode('span',`${weight.toLocaleString('bg-BG')} кг · ${volume.toLocaleString('bg-BG')} м³`),textNode('small',c.description||`${Number(c.pallets)||0} палети`));
+      const mode=document.createElement('td');mode.append(textNode('span',c.mode,'cargo-badge'));
+      const status=document.createElement('td');status.append(textNode('span',c.demo?'Демо':'Локално',c.demo?'cargo-badge demo-badge':'cargo-badge'));
+      const actions=document.createElement('td');
+      if(!c.demo){const btn=textNode('button','Изтрий','delete-btn');btn.type='button';btn.dataset.id=c.id;btn.setAttribute('aria-label',`Изтрий заявка ${c.id}`);actions.append(btn);}
+      else actions.textContent='—';
+      tr.append(id,route,cargo,mode,status,actions);body.append(tr);
+    }
+    refreshCounters();
+  }
+  $('#cargo-search').addEventListener('input',renderCargo);
+  $('#cargo-filter').addEventListener('change',renderCargo);
+  $('#toggle-cargo-form').addEventListener('click',()=>{$('#cargo-form-wrap').hidden=!$('#cargo-form-wrap').hidden;if(!$('#cargo-form-wrap').hidden)$('#cargo-origin').focus();});
+  $('#close-cargo-form').addEventListener('click',()=>{$('#cargo-form-wrap').hidden=true;});
+  $('#cargo-date').min=dateToday();$('#cargo-date').value=dateToday();
+  $('#cargo-form').addEventListener('submit',e=>{
+    e.preventDefault();const form=e.currentTarget;
+    if(!form.reportValidity())return;
+    const data=new FormData(form);
+    const weight=Number(data.get('weight')),volume=Number(data.get('volume')),pallets=Number(data.get('pallets')||0);
+    if(!Number.isFinite(weight)||weight<1||weight>30000||!Number.isFinite(volume)||volume<=0||volume>200||!Number.isInteger(pallets)||pallets<0||pallets>100){notify('Провери теглото, обема и палетите.');return;}
+    const origin=String(data.get('origin')||'').trim(),destination=String(data.get('destination')||'').trim();
+    if(origin.toLocaleLowerCase('bg-BG')===destination.toLocaleLowerCase('bg-BG')){notify('Избери различни точки за товарене и разтоварване.');return;}
+    const id='LOCAL-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+    const entry={id,origin,destination,weight,volume,pallets,date:String(data.get('date')),mode:String(data.get('mode')),description:String(data.get('description')||'').trim(),demo:false};
+    if(entry.date<dateToday()){notify('Избери днешна или бъдеща дата.');return;}
+    userCargo.unshift(entry);
+    if(!saveCargo()){userCargo.shift();return;}
+    form.reset();$('#cargo-date').value=dateToday();$('#cargo-form-wrap').hidden=true;$('#cargo-search').value='';$('#cargo-filter').value='all';renderCargo();notify('Заявката е запазена само на това устройство.');
+  });
+  $('#cargo-body').addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-id]');if(!btn)return;
+    userCargo=userCargo.filter(c=>c.id!==btn.dataset.id);saveCargo();renderCargo();notify('Локалната заявка е изтрита.');
+  });
+
+  function renderTracking(){
+    const val=$('#tracking-number').value.trim().toUpperCase(),container=$('#tracking-output');container.replaceChildren();
+    if(val!=='DEMO-0001'){
+      container.append(textNode('p','Няма данни за този номер. Реална система за проследяване не е свързана. За тест използвай DEMO-0001.','muted'));
+      return;
+    }
+    container.append(textNode('strong','DEMO-0001 · Примерна пратка','cargo-route'));
+    const milestones=[['Заявката е регистрирана','България · демонстрационно събитие','ПРИКЛЮЧЕН ЕТАП'],['Предадена на автомобилен превозвач','Направление към Грузия · примерен статус','ПРИКЛЮЧЕН ЕТАП'],['Пристигане в терминал Поти','Предстоящ контролен етап · без потвърдено събитие','ПЛАНИРАНО'],['Морски преход през Каспийско море','Подлежи на резервация и потвърждение от оператор','ПЛАНИРАНО']];
+    const timeline=document.createElement('div');timeline.style.marginTop='25px';
+    milestones.forEach(([title,detail,state],i)=>{
+      const step=document.createElement('div');step.className='milestone'+(i>1?' waiting':'');
+      step.append(textNode('div',state,'time'),textNode('strong',title),textNode('p',detail));timeline.append(step);
+    });
+    container.append(timeline,textNode('div','ДЕМО: Събитията са изцяло примерни. Няма реален GPS сигнал, API от превозвач или актуално местоположение.','tracking-warning'));
+  }
+  $('#tracking-form').addEventListener('submit',e=>{e.preventDefault();renderTracking();});
+  $('#fill-demo-tracking').addEventListener('click',()=>{$('#tracking-number').value='DEMO-0001';renderTracking();});
+
+  function renderDocs(){
+    const wrap=$('#docs-checklist');wrap.replaceChildren();
+    docs.forEach(([key,title,desc])=>{
+      const label=document.createElement('label');label.className='doc-row';
+      const input=document.createElement('input');input.type='checkbox';input.name=key;input.checked=docChecks[key]===true;
+      input.addEventListener('change',()=>{docChecks[key]=input.checked;saveDocs();updateProgress();});
+      const text=document.createElement('span');text.append(textNode('strong',title),textNode('small',desc));label.append(input,text);wrap.append(label);
+    });updateProgress();
+  }
+  function updateProgress(){const total=docs.length,checked=docs.filter(([key])=>docChecks[key]===true).length;$('#docs-fraction').textContent=`${checked} / ${total}`;$('#docs-progress').style.width=`${100*checked/total}%`;}
+  $('#reset-docs').addEventListener('click',()=>{docChecks={};saveDocs();renderDocs();notify('Отметките са нулирани.');});
+  function renderPartners(){
+    const grid=$('#partners-grid');grid.replaceChildren();
+    partners.forEach(([category,title,desc,locations])=>{
+      const card=document.createElement('article');card.className='partner-card';
+      card.append(textNode('span',category,'partner-type'),textNode('h3',title),textNode('p',desc),textNode('div',locations,'partner-locations'));grid.append(card);
+    });
+  }
+  $('#export-json').addEventListener('click',()=>{
+    const contents=JSON.stringify({application:'CASPIAN LOGISTICS',version:'0.2-demo',exported_at:new Date().toISOString(),records:userCargo},null,2);
+    const url=URL.createObjectURL(new Blob([contents],{type:'application/json;charset=utf-8'}));
+    const a=document.createElement('a');a.href=url;a.download='caspian-logistics-local-cargo.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    notify('Експортът е подготвен.');
+  });
+  $('#clear-local').addEventListener('click',()=>{
+    const dialog=$('#confirm-dialog');
+    if(typeof dialog.showModal==='function'){dialog.showModal();}
+    else if(window.confirm('Да изтрия ли локалните данни?'))clearLocal();
+  });
+  $('#confirm-dialog').addEventListener('close',()=>{if($('#confirm-dialog').returnValue==='confirm')clearLocal();});
+  function clearLocal(){userCargo=[];docChecks={};try{localStorage.removeItem(STORAGE_CARGO);localStorage.removeItem(STORAGE_DOCS);}catch{}renderCargo();renderDocs();notify('Локалните записи са изтрити.');}
+
+  initRoutes();renderCargo();renderDocs();renderPartners();
+  const page=new URLSearchParams(location.search).get('page');if(page&&pageTitles[page])navigate(page);
+})();
+
+</script>
+</body>
+</html>
