@@ -14,7 +14,76 @@
 @media(max-width:650px){.app-shell{display:block}.sidebar{height:auto;position:relative;overflow:visible;padding:14px 16px 0}.brand{margin-bottom:11px}.workspace-indicator,.nav-heading,.sidebar-bottom,.sidebar-footer{display:none}.main-nav{display:none}.sidebar.mobile-open .main-nav{display:grid}.sidebar.mobile-open{padding-bottom:16px}.sidebar.mobile-open .second-heading{display:block}.topbar{height:53px;padding:0 16px}.mobile-menu{display:inline-block;background:#18364a;border:1px solid #2b5267;color:#d4eded;padding:6px 10px;border-radius:6px}.top-status{font-size:10px}.top-divider{display:none}.avatar{height:28px;width:28px;font-size:10px}.breadcrumb{font-size:9px}main{padding:17px 14px}.hero{padding:25px 19px;min-height:340px}.hero h1{font-size:32px}.hero p{font-size:12px}.hero-mesh{width:70%;opacity:.23}.intro-line{font-size:8.5px}.today-tag{display:none}.stats-grid{gap:8px}.stat-card{padding:12px 9px;gap:8px}.stat-icon{height:28px;width:28px;font-size:15px;flex-shrink:0}.stat-card strong{font-size:23px}.stat-card span{font-size:9px}.stat-card small{font-size:8px}.feature-grid,.partners-grid,.admin-grid{grid-template-columns:1fr}.feature-card{min-height:130px}.section-heading h2{font-size:18px}.corridor-card{padding:16px 11px}.corridor-head strong{font-size:11px}.corridor-head small{font-size:9px}.corridor-step small{display:none}.corridor-step strong{font-size:8.5px}.corridor-circle{width:26px;height:26px;margin-bottom:9px}.corridor-steps:before{top:13px}.mode-line{gap:10px;font-size:9px}.page-title-row{flex-wrap:wrap}.page-title-row h1{font-size:24px}.fields-grid{grid-template-columns:1fr}.table-toolbar{flex-direction:column;align-items:stretch}.toolbar-filters{flex-wrap:wrap}.toolbar-filters input{flex:1;min-width:170px}.toolbar-filters select{width:110px}.surface-card{padding:17px}.roadmap>div{align-items:flex-start;flex-wrap:wrap;gap:8px}.roadmap strong{min-width:0}.roadmap small{flex-basis:100%}.roadmap b{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
-  </style>
+  
+/* Shared visual language with INTERNATIONAL BUSINESS HUB and TRADE.
+   Visual-only overrides; retain existing logistic operations and breakpoints. */
+:root{--bg:#f6f8fb;--side:#ffffff;--panel:#ffffff;--panel-2:#f4f7fa;--line:#dee6ec;--muted:#64798e;--accent:#d9b67f;--accent-2:#be955d;--white:#172e43;color:#172e43;background:#f6f8fb}
+body{background:#f6f8fb;color:#172e43}
+.sidebar{background:#fff;border-right:1px solid #dce5eb;box-shadow:3px 0 18px #10233706}
+.brand strong{color:#102337}.brand strong span{color:#af8651}
+.brand-icon{background:#fff;border:1px solid #d4b480;color:#ad8248;border-radius:5px}
+.brand small{color:#778a9d}
+.workspace-indicator{background:#f8f5f0;border:1px solid #e8dcc8;color:#7f6a4d}
+.workspace-spot,.pulse-dot{background:#c59c67;box-shadow:0 0 0 4px #d9b67f24}
+.workspace-version{color:#8d785c}
+.nav-heading{color:#7a8896}
+.nav-link{color:#536b80;border-radius:5px}
+.nav-link:hover{color:#102337;background:#f3f6f8}
+.nav-link.active{color:#102337;background:#f5efe4;border-color:#dfc8a6;font-weight:800}
+.nav-icon,.nav-link.active .nav-icon{color:#aa864f}
+.nav-number{background:#e9eef2;color:#344c62}
+.sidebar-bottom{background:#f7f9fb;border-color:#dee6ec}
+.bottom-icon{background:#e6d5b6;color:#715329}
+.sidebar-bottom strong{color:#24394c}.sidebar-bottom p{color:#64798e}
+.sidebar-footer{color:#8493a2}
+.page-content{background:#f6f8fb}
+.topbar{background:#fff;border-bottom:1px solid #dce5eb}
+.breadcrumb{color:#738598}.breadcrumb span{color:#a5b0b9}.breadcrumb strong{color:#193147}
+.top-status{color:#5d7083}.top-divider{border-color:#e1e7ed}
+.avatar{background:#102337;color:#e9c993;border-radius:5px}
+.mobile-menu{color:#102337}
+.intro-line{color:#9b7a4b}.today-tag{color:#718397}
+.hero{background:linear-gradient(115deg,#102337 0%,#182f49 75%,#1c3b53 100%);border-color:#32465b;border-radius:9px}
+.hero:after{background:radial-gradient(circle,#e4bb772b,transparent 70%)}
+.hero .eyebrow{color:#e4c48c}.small-square{background:#d9b67f}
+.hero h1 em{color:#e1c18b}.hero h1{color:#fff}.hero p{color:#c4d1dd}
+.hero-mesh{opacity:.48}
+.btn{border-radius:5px}.btn-primary{background:#d9b67f;border-color:#d9b67f;color:#14283d}.btn-primary:hover{background:#edcfa1}
+.btn-ghost{color:#eaf1f6;border-color:#798fa2}.btn-ghost:hover{background:#ffffff16}
+.stats-grid .stat-card,.corridor-card,.surface-card,.feature-card{background:#fff;border-color:#dde6ed;color:#21384e;border-radius:7px;box-shadow:0 8px 25px #132c4007}
+.stat-icon,.feature-symbol{background:#f6eee2;border-color:#e9d9c3;color:#ad8247}
+.stat-card span,.stat-card small,.corridor-head small,.corridor-step small,.feature-card p{color:#697e91}
+.stat-card strong,.corridor-step strong,.feature-card strong,.corridor-head strong{color:#20364a}
+.section-kicker,.eyebrow{color:#9f7946}.section-heading h2,.page-title-row h1,.surface-card h3{color:#192f45}
+.text-link{color:#977042}.text-link:hover{color:#61451e}
+.outline-tag,.mini-badge{background:#f8f0e4;border-color:#e1cda8;color:#886432}
+.corridor-steps:before{background:linear-gradient(90deg,#d6ad75,#9ab1c2,#c5a16d)}
+.corridor-circle{background:#f9f0e4;border-color:#cba46f;box-shadow:0 0 0 6px white;color:#826039}
+.mode-line{border-color:#e3e9ee;color:#667b8d}.mode-line small{color:#7e8d9b}
+.legend-dot.road{background:#bb9861}
+.feature-card:hover{background:#f9fbfc;border-color:#d8c29f}
+.feature-arrow{color:#b08a52}
+.page-title-row p,.muted{color:#687e91}
+.form-stack label,.field label{color:#465d70}
+.app-shell input,.app-shell select{background:#fff;color:#1f344a;border:1px solid #cfdce5;border-radius:5px;accent-color:#b78f5b}
+.app-shell input::placeholder{color:#91a1ae}
+.app-shell button:focus-visible,.app-shell input:focus-visible,.app-shell select:focus-visible{outline-color:#bb945c}
+.disclaimer-mini{background:#f8f5ee;border-color:#e9dec9;color:#7b6d5d}
+.empty-message{color:#738597}.empty-symbol{color:#a7b5c0}
+.route-circle{background:#f9eddc;color:#7e5b32;border-color:#c9a06c}
+.route-node:not(:last-child):before{border-color:#c9a16f}
+.route-node small,.route-summary{color:#6d8295}
+.route-mode{background:#f7efe3;color:#876336;border-color:#e5d3b8}
+.form-notice{color:#886432}
+.table-toolbar small,th{color:#708396}
+table{color:#253b51}
+.doc-row,.partner-card,.milestone{color:#243b50}
+.language-switch{display:flex;align-items:center;gap:7px}
+.language-switch label{font-size:11px;color:#607489;font-weight:750}
+.topbar .language-switch select{width:auto;min-width:83px;min-height:33px;padding:5px 9px;background:#fff;color:#193147;border:1px solid #d3dfe6;border-radius:4px;font-size:12px;font-weight:750}
+@media(max-width:680px){.top-actions{gap:8px}.top-status{display:none}.language-switch label{display:none}.topbar .language-switch select{min-width:70px;padding:5px}}
+
+</style>
 
 </head>
 <body>
@@ -46,7 +115,7 @@
   <div class="page-content">
     <header class="topbar">
       <div class="top-left"><button class="mobile-menu" id="mobile-menu" aria-label="Отвори менюто" aria-expanded="false">☰</button><div class="breadcrumb">WORKSPACE <span>/</span> <strong id="breadcrumb-title">ТАБЛО</strong></div></div>
-      <div class="top-actions"><span class="top-status"><span class="pulse-dot"></span> Демо среда</span><span class="top-divider"></span><span class="avatar" title="Демонстрационен профил">CL</span></div>
+      <div class="top-actions"><div class="language-switch"><label for="caspian-language">Език</label><select id="caspian-language" aria-label="Language / Език"><option value="bg">BG</option><option value="en">EN</option><option value="zh">中文</option></select></div><span class="top-status"><span class="pulse-dot"></span> Демо среда</span><span class="top-divider"></span><span class="avatar" title="Демонстрационен профил">CL</span></div>
     </header>
     <main id="main-content">
       <section class="page active" data-panel="home">
@@ -365,6 +434,56 @@
   });
   $('#confirm-dialog').addEventListener('close',()=>{if($('#confirm-dialog').returnValue==='confirm')clearLocal();});
   function clearLocal(){userCargo=[];docChecks={};try{localStorage.removeItem(STORAGE_CARGO);localStorage.removeItem(STORAGE_DOCS);}catch{}renderCargo();renderDocs();notify('Локалните записи са изтрити.');}
+
+
+  // Navigation and overview translations; other specialist demo data remains unchanged.
+  const langPairs = [
+    ['Табло','Dashboard','控制台'],['Планиране','Route planning','路线规划'],['Борса товари','Cargo exchange','货运市场'],
+    ['Проследяване','Tracking','货物追踪'],['Документи','Documents','单证'],['Партньори','Partners','合作伙伴'],['Управление','Administration','管理'],
+    ['ПЛАТФОРМА','PLATFORM','平台'],['УПРАВЛЕНИЕ','MANAGEMENT','管理'],['Демо среда','Demo environment','演示环境'],
+    ['Тестова версия','Demo version','演示版本'],['Без плащания, реални резервации и свързани транспортни оператори.','No payments, live bookings or connected operators.','无支付、实时预订或已连接的运输运营商。'],
+    ['Среден коридор','Middle corridor','中间走廊'],['Свързваме пазари.','Connecting markets.','连接市场。'],['Движим възможности.','Moving opportunities.','运输连接机遇。'],
+    ['Една платформа за сухопътен, железопътен и морски транспорт по Каспийския коридор. От първата заявка до последния логистичен етап.','A platform for road, rail and sea transport along the Caspian corridor, from the first request to the final logistics stage.','面向里海走廊公路、铁路和海运的综合平台，从最初询价到最终物流环节。'],
+    ['Планирай маршрут','Plan a route','规划路线'],['Разгледай товари','Browse cargo','浏览货源'],
+    ['Товарни заявки','Cargo requests','货运请求'],['Само локални и демо записи','Local and demo records only','仅限本地及演示数据'],
+    ['Транспортни режими','Transport modes','运输方式'],['Авто · ЖП · Ферибот','Road · Rail · Ferry','公路 · 铁路 · 轮渡'],
+    ['Хъбове в схемата','Hubs in demo route','示例路线枢纽'],['Примерни логистични възли','Sample logistics hubs','示例物流枢纽'],
+    ['Активни интеграции','Active integrations','已启用集成'],['Не са свързани доставчици','No providers connected','尚未连接服务商'],
+    ['Транспортен коридор','Transport corridor','运输走廊'],['Примерна верига','Sample route chain','示例运输链'],
+    ['СХЕМАТИЧНО','ILLUSTRATIVE','示意图'],['България','Bulgaria','保加利亚'],['Начална точка','Starting point','起点'],
+    ['Черно море','Black Sea','黑海'],['Каспийско море','Caspian Sea','里海'],['Казахстан','Kazakhstan','哈萨克斯坦'],
+    ['Дестинация','Destination','目的地'],['Автомобилен','Road','公路'],['Морски','Sea','海运'],['Железопътен','Rail','铁路'],
+    ['Няма потвърдени разписания и капацитети','No confirmed schedules or capacities','无已确认班期或运力'],
+    ['Основни функционалности','Main features','主要功能'],['Мултимодално планиране','Multimodal planning','多式联运规划'],
+    ['Борса за товари','Cargo exchange','货运市场'],['Етапно проследяване','Milestone tracking','节点追踪'],
+    ['Дигитални документи','Digital documents','电子单证'],
+    ['Разгледай примерни транспортни вериги и точки за прехвърляне.','Explore sample routes and transfer points.','查看示例运输线路和换装节点。'],
+    ['Регистрирай демо заявки с размери, тегло и направление.','Create demo cargo requests with dimensions and weight.','创建包含尺寸和重量的演示货运需求。'],
+    ['Следи логистични събития, а не само GPS координати.','Follow logistics milestones, not just GPS locations.','追踪物流节点，而不仅是 GPS 位置。'],
+    ['Контролен списък за митнически и превозни документи.','Checklist for customs and transport documents.','海关及运输单证检查清单。'],
+    ['Планиране на маршрути','Route planning','路线规划']
+  ];
+  const translatedNodes=[];
+  const transMap=new Map(langPairs.map(([bg,en,zh])=>[bg,{bg,en,zh}]));
+  // Capture stable static nodes only, leaving dynamic forms and saved business data intact.
+  const walker=document.createTreeWalker(document.querySelector('.app-shell'),NodeFilter.SHOW_TEXT);
+  let textItem;
+  while((textItem=walker.nextNode())){
+    const origin=textItem.nodeValue.trim();
+    if(transMap.has(origin)) translatedNodes.push({node:textItem,origin});
+  }
+  const languageSwitch=$('#caspian-language');
+  function setDemoLanguage(lang){
+    const selected=['bg','en','zh'].includes(lang)?lang:'bg';
+    document.documentElement.lang=selected==='zh'?'zh-CN':selected;
+    languageSwitch.value=selected;
+    translatedNodes.forEach(({node,origin})=>{if(node.isConnected)node.nodeValue=transMap.get(origin)[selected];});
+    const url=new URL(location.href);url.searchParams.set('lang',selected);
+    try{history.replaceState(null,'',url);localStorage.setItem('caspian_demo_language',selected)}catch{}
+  }
+  languageSwitch.addEventListener('change',()=>setDemoLanguage(languageSwitch.value));
+  let rememberedLanguage='bg';try{rememberedLanguage=localStorage.getItem('caspian_demo_language')||'bg'}catch{}
+  setDemoLanguage((new URLSearchParams(location.search).get('lang')||rememberedLanguage).toLowerCase());
 
   initRoutes();renderCargo();renderDocs();renderPartners();
   const page=new URLSearchParams(location.search).get('page');if(page&&pageTitles[page])navigate(page);
