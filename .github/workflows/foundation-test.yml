@@ -1,0 +1,107 @@
+name: CASPIAN foundation checks
+
+on:
+  push:
+    branches:
+      - development/foundation-v03
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: caspian_test
+          POSTGRES_PASSWORD: test_only_not_production
+          POSTGRES_DB: caspian_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U caspian_test -d caspian_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgres://caspian_test:test_only_not_production@127.0.0.1:5432/caspian_test
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: caspian_test
+      PGPASSWORD: test_only_not_production
+      PGDATABASE: caspian_test
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client
+
+      - name: Apply SQL foundation migration to temporary DB
+        run: psql -v ON_ERROR_STOP=1 -f db/migrations/001_foundation.sql
+
+      - name: Verify expected tables and basic constraints
+        run: |
+          set -euo pipefail
+          tables=$(psql -Atc "SELECT count(*) FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('companies','app_users','company_memberships','cargo_requests','route_legs','shipment_events','document_metadata','audit_log')")
+          test "$tables" = "8"
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          BEGIN;
+          INSERT INTO companies (legal_name,registration_country,registration_number)
+          VALUES ('CI test company','BG','CI-0001');
+          DO $$
+          BEGIN
+            BEGIN
+              INSERT INTO companies (legal_name,registration_country,registration_number)
+              VALUES ('Duplicate CI test company','BG','CI-0001');
+              RAISE EXCEPTION 'Duplicate company was unexpectedly accepted';
+            EXCEPTION WHEN unique_violation THEN
+              NULL;
+            END;
+          END;
+          $$;
+          ROLLBACK;
+          SQL
+
+      - name: Install API dependencies
+        working-directory: apps/api
+        run: npm install --no-audit --no-fund
+
+      - name: Run isolated API tests
+        working-directory: apps/api
+        run: npm test
+
+      - name: Start API bound to localhost
+        working-directory: apps/api
+        env:
+          HOST: 127.0.0.1
+          PORT: 3001
+        run: |
+          node src/server.mjs > /tmp/caspian-api.log 2>&1 &
+          echo $! > /tmp/caspian-api.pid
+
+      - name: Check real API to PostgreSQL connection
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:3001/health/ready | grep -q '"status":"ready"'; then
+              curl --silent --fail http://127.0.0.1:3001/health/live
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/caspian-api.log
+          exit 1
