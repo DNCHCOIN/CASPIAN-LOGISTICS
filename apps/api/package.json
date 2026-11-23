@@ -1,0 +1,1 @@
+{"name":"caspian-logistics-api","version":"0.3.0-dev","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"start":"node src/server.mjs","test":"node --test"},"dependencies":{"pg":"^8.16.3"}}
