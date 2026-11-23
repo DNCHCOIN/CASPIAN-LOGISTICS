@@ -53,6 +53,9 @@ jobs:
       - name: Apply SQL foundation migration to temporary DB
         run: psql -v ON_ERROR_STOP=1 -f db/migrations/001_foundation.sql
 
+      - name: Apply temporary test-account migration
+        run: psql -v ON_ERROR_STOP=1 -f db/migrations/002_test_accounts.sql
+
       - name: Verify expected tables and basic constraints
         run: |
           set -euo pipefail
@@ -89,6 +92,8 @@ jobs:
         env:
           HOST: 127.0.0.1
           PORT: 3001
+          ENABLE_TEST_AUTH: 'true'
+          NODE_ENV: development
         run: |
           node src/server.mjs > /tmp/caspian-api.log 2>&1 &
           echo $! > /tmp/caspian-api.pid
@@ -105,3 +110,11 @@ jobs:
           done
           cat /tmp/caspian-api.log
           exit 1
+
+      - name: Verify two independent admins against real PostgreSQL
+        working-directory: apps/api
+        env:
+          CASPIAN_CI_TEST: 'true'
+          ENABLE_TEST_AUTH: 'true'
+          NODE_ENV: development
+        run: node scripts/check-two-admins.mjs
