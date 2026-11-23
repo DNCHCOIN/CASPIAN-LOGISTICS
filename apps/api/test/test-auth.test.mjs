@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { passwordDigest,passwordMatches,tokenHash,parseSessionCookie,sessionCookie,ACCOUNT_NAMES } from '../src/test-auth.mjs';
-test('two predefined personal testing handles',()=>assert.deepEqual(ACCOUNT_NAMES,['nedka-admin','tsvetan-review']));
+test('two predefined personal testing handles',()=>assert.deepEqual(ACCOUNT_NAMES,['nedka-admin','tsvetan-admin']));
 test('password digests roundtrip and reject incorrect password',async()=>{
  const d=await passwordDigest('long-test-password-12345678');
  assert.equal(await passwordMatches('long-test-password-12345678',d.salt,d.hash),true);
