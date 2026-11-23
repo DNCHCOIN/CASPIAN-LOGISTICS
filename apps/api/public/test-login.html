@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>CASPIAN LOGISTICS — Тестов вход</title>
+<link rel="stylesheet" href="/test-login.css"></head>
+<body><main class="panel">
+<div class="eyebrow">CASPIAN LOGISTICS · DEVELOPMENT</div>
+<h1>Тестов административен вход</h1>
+<p class="note">Само за локални тестове. Не използвай реални фирмени данни.</p>
+<form id="login-form">
+<label for="username">Потребител</label>
+<input id="username" name="username" autocomplete="username" required placeholder="nedka-admin или tsvetan-admin">
+<label for="password">Парола</label>
+<input id="password" name="password" type="password" autocomplete="current-password" required>
+<button type="submit">Вход</button>
+</form>
+<section id="signed" hidden><h2>Влязъл потребител</h2><p id="profile"></p><button id="logout" type="button">Изход</button></section>
+<p id="message" role="status" aria-live="polite"></p>
+</main><script type="module" src="/test-login.js"></script></body></html>
