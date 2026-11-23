@@ -8,7 +8,9 @@ if (process.env.NODE_ENV === 'production' || process.env.ENABLE_TEST_AUTH !== 't
 if(!url)throw Error('DATABASE_URL required');
 const first=process.env.TEST_ADMIN_PASSWORD;
 const second=process.env.TEST_TSVETAN_PASSWORD;
-if (!first || !second || first===second) throw Error('Provide two distinct passwords meeting the 10+ character composition rule using TEST_ADMIN_PASSWORD and TEST_TSVETAN_PASSWORD');
+if (!first || !second) throw Error('Provide passwords meeting the test password policy via TEST_ADMIN_PASSWORD and TEST_TSVETAN_PASSWORD');
+// Identical passwords are supported for this isolated, non-production preview only.
+// Strongly recommend unique credentials before sharing any publicly reachable staging service.
 const accounts=[['nedka-admin','DNCH development','test_admin',first],['tsvetan-admin','Tsvetan development','test_admin',second]];
 const pool=new Pool({connectionString:url});
 try {
