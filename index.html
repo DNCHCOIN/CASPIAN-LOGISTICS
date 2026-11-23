@@ -255,9 +255,9 @@ table{color:#253b51}
   let docChecks = storedObject(STORAGE_DOCS);
   const saveCargo = () => { try { localStorage.setItem(STORAGE_CARGO, JSON.stringify(userCargo)); return true; } catch { notify('Записът не е позволен от браузъра.'); return false; } };
   const saveDocs = () => { try { localStorage.setItem(STORAGE_DOCS, JSON.stringify(docChecks)); } catch { notify('Браузърът не позволява запазване на отметки.'); } };
-  const textNode = (tag, content, className) => { const el=document.createElement(tag); if(className) el.className=className; el.textContent=content; return el; };
+  const textNode = (tag, content, className) => { const el=document.createElement(tag); if(className) el.className=className; el.textContent=typeof ui==='function'?ui(content):content; return el; };
   const notify = message => {
-    const toast = $('#toast'); toast.textContent = message; toast.hidden = false;
+    const toast = $('#toast'); toast.textContent = typeof ui==='function'?ui(message):message; toast.hidden = false;
     clearTimeout(notify._timer); notify._timer = setTimeout(() => toast.hidden=true, 3600);
   };
   const longDate = date => {
@@ -265,7 +265,7 @@ table{color:#253b51}
     const parts = date.split('-').map(Number);
     const dateObj = new Date(parts[0], parts[1]-1, parts[2]);
     if(Number.isNaN(dateObj.getTime())) return '—';
-    return new Intl.DateTimeFormat('bg-BG',{day:'2-digit',month:'short',year:'numeric'}).format(dateObj);
+    return localizedDate(date);
   };
   const dateToday = () => { const d=new Date(); const n=x=>String(x).padStart(2,'0'); return `${d.getFullYear()}-${n(d.getMonth()+1)}-${n(d.getDate())}`; };
   function navigate(page) {
@@ -275,7 +275,7 @@ table{color:#253b51}
       const isActive=el.dataset.page===page; el.classList.toggle('active',isActive);
       if(isActive)el.setAttribute('aria-current','page'); else el.removeAttribute('aria-current');
     });
-    $('#breadcrumb-title').textContent=pageTitles[page];
+    $('#breadcrumb-title').textContent=typeof ui==='function'?ui(pageTitles[page]):pageTitles[page];
     $('#sidebar').classList.remove('mobile-open'); $('#mobile-menu').setAttribute('aria-expanded','false');
     window.scrollTo({top:0,behavior:'instant'});
   }
@@ -291,7 +291,7 @@ table{color:#253b51}
   function initRoutes(){
     for(const id of ['#route-start','#route-end']) {
       const select=$(id);
-      for(const n of nodes) select.add(new Option(n,n));
+      for(const n of nodes) select.add(new Option(ui(n),n));
     }
     $('#route-start').value='Пловдив'; $('#route-end').value='Алмати';
     $('#route-form').addEventListener('submit',e=>{e.preventDefault(); calculateRoute();});
@@ -321,18 +321,18 @@ table{color:#253b51}
     while(cursor!==start && prev.has(cursor)){const segment=prev.get(cursor);route.unshift({city:cursor,mode:segment.mode,description:segment.description});cursor=segment.from;}
     if(cursor!==start){output.append(textNode('p','Маршрутът не може да се изгради.','muted'));return;}
     route.unshift({city:start});
-    const title=textNode('div',`${start} → ${end}`,'cargo-route');output.append(title);
+    const title=textNode('div',`${ui(start)} → ${ui(end)}`,'cargo-route');output.append(title);
     const nodesDiv=document.createElement('div');nodesDiv.className='route-route';
     route.forEach((stop,i)=>{
       const row=document.createElement('div');row.className='route-node';
       row.append(textNode('span',i+1,'route-circle'));
-      const body=document.createElement('div');body.append(textNode('strong',stop.city));
+      const body=document.createElement('div');body.append(textNode('strong',ui(stop.city)));
       if(i===0) body.append(textNode('small','Начален логистичен възел'));
-      else body.append(textNode('small',stop.description));
+      else body.append(textNode('small',ui(stop.description)));
       if(i>0) body.append(textNode('span',({road:'Авто',rail:'ЖП',sea:'Море'})[stop.mode],'route-mode'));
       row.append(body);nodesDiv.append(row);
     });
-    output.append(nodesDiv,textNode('div',`${route.length} логистични точки · примерна последователност, без изчисление на транзитно време и цена. Проверка на реалния маршрут и разрешителните е задължителна.`,'route-summary'));
+    output.append(nodesDiv,textNode('div',({bg:`${route.length} логистични точки · примерна последователност, без изчисление на транзитно време и цена. Проверка на реалния маршрут и разрешителните е задължителна.`,en:`${route.length} logistics stops · illustrative sequence, no transit time or price calculation. Verify the actual route and permits.`,zh:`${route.length} 个物流节点 · 仅为示例路线，不计算运输时间或费用。请核实实际路线及许可。`})[languageSwitch.value],'route-summary'));
   }
 
   function allCargo() { return [...userCargo, ...demoCargo]; }
@@ -348,13 +348,13 @@ table{color:#253b51}
     for(const c of filtered){
       const tr=document.createElement('tr');
       const id=document.createElement('td');id.append(textNode('span',c.id,'cargo-id'),textNode('small',c.demo?'Демо запис':'Локален запис'));
-      const route=document.createElement('td');route.append(textNode('span',`${c.origin} → ${c.destination}`,'cargo-route'),textNode('small',`Желана дата: ${longDate(c.date)}`));
+      const route=document.createElement('td');route.append(textNode('span',`${c.demo?c.origin.split(', ').map(ui).join(', '):c.origin} → ${c.demo?c.destination.split(', ').map(ui).join(', '):c.destination}`,'cargo-route'),textNode('small',`${ui('Желана дата:')} ${longDate(c.date)}`));
       const cargo=document.createElement('td');const weight=Number(c.weight)||0,volume=Number(c.volume)||0;
-      cargo.append(textNode('span',`${weight.toLocaleString('bg-BG')} кг · ${volume.toLocaleString('bg-BG')} м³`),textNode('small',c.description||`${Number(c.pallets)||0} палети`));
+      cargo.append(textNode('span',`${weight.toLocaleString(({bg:'bg-BG',en:'en-GB',zh:'zh-CN'})[languageSwitch.value])} ${ui('кг')} · ${volume.toLocaleString(({bg:'bg-BG',en:'en-GB',zh:'zh-CN'})[languageSwitch.value])} м³`),textNode('small',(c.demo?ui(c.description):c.description)||`${Number(c.pallets)||0} ${ui('палети')}`));
       const mode=document.createElement('td');mode.append(textNode('span',c.mode,'cargo-badge'));
       const status=document.createElement('td');status.append(textNode('span',c.demo?'Демо':'Локално',c.demo?'cargo-badge demo-badge':'cargo-badge'));
       const actions=document.createElement('td');
-      if(!c.demo){const btn=textNode('button','Изтрий','delete-btn');btn.type='button';btn.dataset.id=c.id;btn.setAttribute('aria-label',`Изтрий заявка ${c.id}`);actions.append(btn);}
+      if(!c.demo){const btn=textNode('button','Изтрий','delete-btn');btn.type='button';btn.dataset.id=c.id;btn.setAttribute('aria-label',`${ui('Изтрий')} ${c.id}`);actions.append(btn);}
       else actions.textContent='—';
       tr.append(id,route,cargo,mode,status,actions);body.append(tr);
     }
@@ -409,7 +409,7 @@ table{color:#253b51}
       const label=document.createElement('label');label.className='doc-row';
       const input=document.createElement('input');input.type='checkbox';input.name=key;input.checked=docChecks[key]===true;
       input.addEventListener('change',()=>{docChecks[key]=input.checked;saveDocs();updateProgress();});
-      const text=document.createElement('span');text.append(textNode('strong',title),textNode('small',desc));label.append(input,text);wrap.append(label);
+      const text=document.createElement('span');text.append(textNode('strong',ui(title)),textNode('small',ui(desc)));label.append(input,text);wrap.append(label);
     });updateProgress();
   }
   function updateProgress(){const total=docs.length,checked=docs.filter(([key])=>docChecks[key]===true).length;$('#docs-fraction').textContent=`${checked} / ${total}`;$('#docs-progress').style.width=`${100*checked/total}%`;}
@@ -418,7 +418,7 @@ table{color:#253b51}
     const grid=$('#partners-grid');grid.replaceChildren();
     partners.forEach(([category,title,desc,locations])=>{
       const card=document.createElement('article');card.className='partner-card';
-      card.append(textNode('span',category,'partner-type'),textNode('h3',title),textNode('p',desc),textNode('div',locations,'partner-locations'));grid.append(card);
+      card.append(textNode('span',ui(category),'partner-type'),textNode('h3',ui(title)),textNode('p',ui(desc)),textNode('div',ui(locations),'partner-locations'));grid.append(card);
     });
   }
   $('#export-json').addEventListener('click',()=>{
@@ -564,11 +564,21 @@ table{color:#253b51}
   ];
   // Resolve text in all three supported languages, including nodes rendered after page load.
   // Only exact dictionary matches are translated; user-entered company and cargo data stays untouched.
+  // Explicit translations for dynamically generated interface content.
+  const dynamicPairs = [["Пловдив","Plovdiv","普罗夫迪夫"],["София","Sofia","索非亚"],["Баку","Baku","巴库"],["Алат","Alat","阿拉特"],["Актау","Aktau","阿克套"],["Туркменбаши","Turkmenbashi","土库曼巴希"],["Ташкент","Tashkent","塔什干"],["Грузия","Georgia","格鲁吉亚"],["Азербайджан","Azerbaijan","阿塞拜疆"],["Европа","Europe","欧洲"],["Кавказ","Caucasus","高加索"],["Централна Азия","Central Asia","中亚"],["Демо запис","Demo record","演示记录"],["Локален запис","Local record","本地记录"],["Демо","Demo","演示"],["Локално","Local","本地"],["Желана дата:","Requested date:","期望日期："],["палети","pallets","托盘"],["кг","kg","公斤"],["Начален логистичен възел","Starting logistics hub","起始物流枢纽"],["Авто","Road","公路"],["ЖП","Rail","铁路"],["Море","Sea","海运"],["Машинни компоненти","Machinery components","机械零件"],["Промишлено оборудване","Industrial equipment","工业设备"],["Опаковани стоки","Packaged goods","包装货物"],["Търговска фактура","Commercial invoice","商业发票"],["Проверка на данните за изпращач, получател и стоката.","Check sender, consignee and goods details.","核对发货人、收货人及货物详情。"],["Опаковъчен лист","Packing list","装箱单"],["Количество, тегло, брой опаковки, маркировки.","Quantity, weight, package count and markings.","数量、重量、包装件数及唛头。"],["Товарителница / e-CMR","Consignment note / e-CMR","运单 / e-CMR"],["Подготовка според режима и приложимите правила.","Preparation according to the transport mode and applicable rules.","按照运输方式及适用规定准备。"],["Митнически документи / TIR","Customs documents / TIR","海关单证 / TIR"],["Проверка на приложимост и изисквания по направление.","Check applicability and route-specific requirements.","核对适用性及线路要求。"],["Терминални документи","Terminal documents","码头单证"],["Изисквания на пристанища, оператори и транзитни хъбове.","Port, operator and transit hub requirements.","港口、运营商及中转枢纽要求。"],["Застраховка / разрешителни","Insurance / permits","保险 / 许可证"],["Според товара, страните и условията на транспорта.","Depending on cargo, countries and transport terms.","视货物、国家及运输条款而定。"],["Складове и консолидация","Warehousing and consolidation","仓储与拼箱"],["Виртуални складови локации и бъдещи обяви за налични площи.","Example warehouse locations and future listings of available space.","示例仓库位置及未来可用仓储信息。"],["Фериботен транспорт","Ferry transport","轮渡运输"],["Разписания, заявки за места и статуса на морските преходи — след интеграция.","Schedules, slot requests and sea crossing status after integration.","集成后提供班期、舱位申请及海运状态。"],["Железопътни оператори","Rail operators","铁路运营商"],["Партньорска мрежа за контейнери, вагони и претоварване.","Partner network for containers, wagons and transshipment.","集装箱、车皮及换装合作网络。"],["Митнически брокери","Customs brokers","报关代理"],["Фирмени профили и проверка на документацията за граници.","Company profiles and border documentation checks.","企业资料及边境单证核查。"],["Автомобилен транспорт","Road freight","公路货运"],["FTL, LTL, първа и последна миля, свободен капацитет.","FTL, LTL, first and last mile, available capacity.","整车、零担、首末公里及可用运力。"],["Терминали и хъбове","Terminals and hubs","码头与物流枢纽"],["Статуси за пристигане, претоварване и напускане на терминали.","Arrival, transshipment and terminal departure statuses.","到港、换装及离港状态。"],["Поти · Батуми · Баку","Poti · Batumi · Baku","波季 · 巴统 · 巴库"],["Алат · Курик · Актау","Alat · Kuryk · Aktau","阿拉特 · 库雷克 · 阿克套"],["Азербайджан · Казахстан","Azerbaijan · Kazakhstan","阿塞拜疆 · 哈萨克斯坦"],["Баку · Тбилиси · Алмати","Baku · Tbilisi · Almaty","巴库 · 第比利斯 · 阿拉木图"],["Европа · Кавказ · Централна Азия","Europe · Caucasus · Central Asia","欧洲 · 高加索 · 中亚"],["Поти · Алат · Курик","Poti · Alat · Kuryk","波季 · 阿拉特 · 库雷克"],["Автомобилен през Турция и Грузия","Road via Türkiye and Georgia","经土耳其和格鲁吉亚的公路运输"],["Железопътен транзит през Грузия","Rail transit through Georgia","经格鲁吉亚铁路过境"],["Автомобилен транзит през Грузия","Road transit through Georgia","经格鲁吉亚公路过境"],["Автомобилен трансфер към пристанище","Road transfer to port","公路接驳至港口"],["Ферибот / морски преход","Ferry / sea crossing","轮渡 / 海运"],["Ферибот / морски преход — за потвърждение","Ferry / sea crossing — pending confirmation","轮渡 / 海运 — 待确认"],["Железопътен транзит през Узбекистан","Rail transit through Uzbekistan","经乌兹别克斯坦铁路过境"],["Началната точка и дестинацията съвпадат.","The origin and destination are the same.","起点与终点相同。"],["Няма демонстрационна връзка за избраното направление.","No demo connection for the selected direction.","所选方向没有演示连接。"],["Маршрутът не може да се изгради.","Unable to build the route.","无法生成路线。"],["Данните не са налични.","Data unavailable.","数据不可用。"],["Няма данни за този номер. Реална система за проследяване не е свързана. За тест използвай DEMO-0001.","No data for this number. Live tracking is not connected. Use DEMO-0001 for testing.","此编号没有数据。尚未接入实时追踪。测试请使用 DEMO-0001。"],["DEMO-0001 · Примерна пратка","DEMO-0001 · Sample shipment","DEMO-0001 · 示例货运"],["Заявката е регистрирана","Request registered","请求已登记"],["България · демонстрационно събитие","Bulgaria · sample event","保加利亚 · 演示事件"],["ПРИКЛЮЧЕН ЕТАП","COMPLETED","已完成"],["Предадена на автомобилен превозвач","Handed over to road carrier","已交付公路承运商"],["Направление към Грузия · примерен статус","Direction toward Georgia · sample status","前往格鲁吉亚 · 示例状态"],["Пристигане в терминал Поти","Arrival at Poti terminal","到达波季码头"],["Предстоящ контролен етап · без потвърдено събитие","Upcoming checkpoint · no confirmed event","后续节点 · 尚无确认事件"],["ПЛАНИРАНО","PLANNED","计划中"],["Морски преход през Каспийско море","Sea crossing of the Caspian Sea","跨越里海"],["Подлежи на резервация и потвърждение от оператор","Subject to booking and operator confirmation","须经预订和运营商确认"],["ДЕМО: Събитията са изцяло примерни. Няма реален GPS сигнал, API от превозвач или актуално местоположение.","DEMO: All events are illustrative. No live GPS, carrier API or current location is available.","演示：所有事件均为示例，无实时 GPS、承运商 API 或当前位置信息。"],["Записът не е позволен от браузъра.","The browser blocked saving.","浏览器阻止了保存。"],["Браузърът не позволява запазване на отметки.","The browser blocked saving checklist selections.","浏览器阻止保存清单选择。"],["Провери теглото, обема и палетите.","Check weight, volume and pallet count.","请检查重量、体积和托盘数量。"],["Избери различни точки за товарене и разтоварване.","Select different loading and unloading locations.","请选择不同的装货和卸货地点。"],["Избери днешна или бъдеща дата.","Select today or a future date.","请选择今天或未来日期。"],["Заявката е запазена само на това устройство.","Request saved on this device only.","请求仅保存在本设备。"],["Локалната заявка е изтрита.","Local request deleted.","本地请求已删除。"],["Отметките са нулирани.","Checklist reset.","清单已重置。"],["Експортът е подготвен.","Export ready.","导出已准备就绪。"],["Да изтрия ли локалните данни?","Delete local data?","删除本地数据？"],["Локалните записи са изтрити.","Local records deleted.","本地记录已删除。"],["WAREHOUSING","WAREHOUSING","仓储"],["FERRY OPERATORS","FERRY OPERATORS","轮渡运营商"],["RAIL OPERATORS","RAIL OPERATORS","铁路运营商"],["CUSTOMS","CUSTOMS","海关"],["ROAD FREIGHT","ROAD FREIGHT","公路货运"],["LOGISTICS HUBS","LOGISTICS HUBS","物流枢纽"],["ПЛАНИРАНЕ","ROUTE PLANNING","路线规划"],["БОРСА ТОВАРИ","CARGO EXCHANGE","货运市场"],["ПРОСЛЕДЯВАНЕ","TRACKING","货物追踪"],["ДОКУМЕНТИ","DOCUMENTS","单证"],["ПАРТНЬОРИ","PARTNERS","合作伙伴"],["УПРАВЛЕНИЕ","ADMINISTRATION","管理"],["Транспортен коридор","Transport corridor","运输走廊"]];
   const transMap=new Map();
-  langPairs.forEach(([bg,en,zh])=>{
+  [...langPairs,...dynamicPairs].forEach(([bg,en,zh])=>{
     const translations={bg,en,zh};
     [bg,en,zh].forEach(label=>transMap.set(label,translations));
   });
+  const ui = value => transMap.get(value)?.[languageSwitch.value] || value;
+  const localizedDate = date => {
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(String(date)))return '—';
+    const [y,m,d]=date.split('-').map(Number);
+    const obj=new Date(y,m-1,d);
+    if(obj.getFullYear()!==y||obj.getMonth()!==m-1||obj.getDate()!==d)return '—';
+    return new Intl.DateTimeFormat(({bg:'bg-BG',en:'en-GB',zh:'zh-CN'})[languageSwitch.value]||'bg-BG',{day:'2-digit',month:'short',year:'numeric'}).format(obj);
+  };
   const languageSwitch=$('#caspian-language');
   function translateVisibleLabels(selected){
     const root=document.querySelector('.app-shell');
@@ -588,6 +598,15 @@ table{color:#253b51}
     const selected=['bg','en','zh'].includes(lang)?lang:'bg';
     document.documentElement.lang=selected==='zh'?'zh-CN':selected;
     languageSwitch.value=selected;
+    // Recreate dynamic UI using the newly selected language.
+    $('#breadcrumb-title').textContent=ui(pageTitles[$('.page.active')?.dataset.panel]||pageTitles.home);
+    $('#today-label').textContent=new Intl.DateTimeFormat(({bg:'bg-BG',en:'en-GB',zh:'zh-CN'})[selected],{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+    for(const select of [$('#route-start'),$('#route-end')]){
+      for(const option of select.options) option.textContent=ui(option.value);
+    }
+    renderCargo();renderDocs();renderPartners();
+    if($('#tracking-output').children.length && $('#tracking-number').value.trim())renderTracking();
+    if($('#route-output').querySelector('.route-node'))calculateRoute();
     translateVisibleLabels(selected);
     const url=new URL(location.href);url.searchParams.set('lang',selected);
     try{history.replaceState(null,'',url);localStorage.setItem('caspian_demo_language',selected)}catch{}
