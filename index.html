@@ -572,6 +572,12 @@ table{color:#253b51}
     const translations={bg,en,zh};
     [bg,en,zh].forEach(label=>transMap.set(label,translations));
   });
+  // Localize English-first labels too. Brand names, identifiers and logistics standards stay unchanged.
+  const englishFirstPairs=[["TRANSPORT NETWORK","ТРАНСПОРТНА МРЕЖА","交通运输网络"],["DEMO WORKSPACE","ДЕМОНСТРАЦИОННА СРЕДА","演示工作区"],["Independent project · Concept MVP","Независим проект · Концептуален прототип","独立项目 · 概念原型"],["WORKSPACE","РАБОТНА СРЕДА","工作区"],["MULTIMODAL LOGISTICS PLATFORM","МУЛТИМОДАЛНА ЛОГИСТИЧНА ПЛАТФОРМА","多式联运物流平台"],["NETWORK OVERVIEW","ПРЕГЛЕД НА МРЕЖАТА","运输网络概览"],["OPERATIONS","ОПЕРАЦИИ","业务操作"],["ROUTE ENGINE","ПЛАНИРАНЕ НА МАРШРУТИ","路线规划引擎"],["DEMO ROUTING","ДЕМОНСТРАЦИОННИ МАРШРУТИ","演示路线规划"],["FREIGHT EXCHANGE","БОРСА ЗА ТОВАРИ","货运市场"],["MILESTONE VISIBILITY","ПРОСЛЕДЯВАНЕ НА ЕТАПИТЕ","运输节点追踪"],["DOCUMENT WORKSPACE","РАБОТА С ДОКУМЕНТИ","单证工作区"],["PARTNER NETWORK","ПАРТНЬОРСКА МРЕЖА","合作伙伴网络"],["DEMO MANAGEMENT","ДЕМОНСТРАЦИОННО УПРАВЛЕНИЕ","演示管理"],["DEMO","ДЕМО","演示"],["Independent project","Независим проект","独立项目"],["Concept MVP","Концептуален прототип","概念原型"]];
+  englishFirstPairs.forEach(([en,bg,zh])=>{
+    const translations={bg,en,zh};
+    [bg,en,zh].forEach(label=>transMap.set(label,translations));
+  });
   const ui = value => transMap.get(value)?.[languageSwitch.value] || value;
   const localizedDate = date => {
     if(!/^\d{4}-\d{2}-\d{2}$/.test(String(date)))return '—';
