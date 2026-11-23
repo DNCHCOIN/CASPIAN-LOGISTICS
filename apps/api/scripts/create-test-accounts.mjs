@@ -9,7 +9,7 @@ if(!url)throw Error('DATABASE_URL required');
 const first=process.env.TEST_ADMIN_PASSWORD;
 const second=process.env.TEST_TSVETAN_PASSWORD;
 if (!first || !second || first===second) throw Error('Provide two different long passwords using TEST_ADMIN_PASSWORD and TEST_TSVETAN_PASSWORD');
-const accounts=[['nedka-admin','DNCH development','test_admin',first],['tsvetan-review','Tsvetan preview','test_reviewer',second]];
+const accounts=[['nedka-admin','DNCH development','test_admin',first],['tsvetan-admin','Tsvetan development','test_admin',second]];
 const pool=new Pool({connectionString:url});
 try {
   for(const [login,displayName,role,password] of accounts) {
@@ -22,5 +22,5 @@ try {
     // Credential rotation invalidates previous sessions.
     await pool.query('DELETE FROM test_sessions WHERE account_id=(SELECT id FROM test_accounts WHERE login_name=$1)',[login]);
   }
-  console.log('Two isolated test accounts provisioned: nedka-admin, tsvetan-review. No passwords printed.');
+  console.log('Two isolated test accounts provisioned: nedka-admin, tsvetan-admin. No passwords printed.');
 } finally {await pool.end();}
