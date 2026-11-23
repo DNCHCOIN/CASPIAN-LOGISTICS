@@ -6,9 +6,21 @@ export const COOKIE = 'caspian_test_session';
 const HASH_BYTES = 64;
 const SESSION_SECONDS = 60 * 60 * 8;
 
+export function validTestPassword(password) {
+  if (typeof password !== 'string' || Buffer.byteLength(password, 'utf8') > 1024) return false;
+  const letters = password.match(/[A-Za-z]/g) ?? [];
+  const numbers = password.match(/[0-9]/g) ?? [];
+  const specials = password.match(/[^A-Za-z0-9\s]/gu) ?? [];
+  return [...password].length >= 10
+    && letters.length >= 6
+    && /[A-Z]/.test(password)
+    && numbers.length >= 3
+    && specials.length >= 1
+    && !/\s/u.test(password);
+}
 export async function passwordDigest(password, salt = randomBytes(16).toString('hex')) {
-  if (typeof password !== 'string' || password.length < 14 || Buffer.byteLength(password,'utf8') > 1024)
-    throw new Error('Password must be at least 14 characters and at most 1024 bytes');
+  if (!validTestPassword(password))
+    throw new Error('Test password requires 10+ characters, 6+ letters (1 uppercase), 3+ digits, and 1+ special symbol, with no whitespace');
   const hash = await scrypt(password,salt,HASH_BYTES);
   return { salt, hash:hash.toString('hex') };
 }
