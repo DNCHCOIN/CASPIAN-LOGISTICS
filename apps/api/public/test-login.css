@@ -1,0 +1,8 @@
+:root{color-scheme:dark;font-family:Inter,system-ui,Segoe UI,sans-serif;background:#081726;color:#eaf5fb}
+*{box-sizing:border-box}body{min-height:100vh;display:grid;place-items:center;margin:0;padding:20px}
+.panel{width:min(100%,460px);background:#102a3c;padding:32px;border-radius:18px;border:1px solid #345264}
+.eyebrow{color:#30dbc6;font-size:12px;font-weight:800;letter-spacing:.1em}h1{font-size:27px;line-height:1.2}
+.note{color:#abc5d3;font-size:14px;line-height:1.5}
+label{display:block;margin:18px 0 7px}input{display:block;width:100%;padding:13px;border:1px solid #567183;border-radius:8px;background:#071827;color:white;font-size:16px}
+button{width:100%;border:0;border-radius:9px;padding:13px;margin-top:22px;color:#06232c;background:#27dcc4;font-weight:800;cursor:pointer}button:hover{background:#8dfae6}
+#message{min-height:22px;color:#ffd0af}#signed{border-top:1px solid #345264;margin-top:22px}
