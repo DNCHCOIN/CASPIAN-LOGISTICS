@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CASPIAN LOGISTICS – проследяване на мултимодални пратки по транспортни етапи.">
+<title>Milestone Tracking | CASPIAN LOGISTICS</title>
+<link rel="stylesheet" href="tracking.css">
+<script type="module" src="tracking.js"></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <a class="brand" href="./index.html"><span class="brand-mark">C</span><span><strong>CASPIAN<br><em>LOGISTICS</em></strong><small>MIDDLE CORRIDOR HUB</small></span></a>
+    <div class="nav-title">РАБОТНО ПРОСТРАНСТВО</div>
+    <a class="nav-item" href="./index.html"><span>⌂</span> Главно табло</a>
+    <a class="nav-item" href="./index.html"><span>▣</span> Борса за товари</a>
+    <a class="nav-item selected" href="tracking.html" aria-current="page"><span>◎</span> Проследяване</a>
+    <div class="rail-bottom"><span class="dot"></span><b>TRACKING MODULE v0.3</b><p>Събития по етапи · Демо/локален режим · Без GPS API</p></div>
+  </aside>
+  <div class="workspace">
+    <header class="top"><span class="crumb">CASPIAN / OPERATIONS / <b>TRACK & TRACE</b></span><span class="top-right"><i></i> DEMO WORKSPACE</span></header>
+    <main>
+      <div class="page-intro"><div><div class="eyebrow">◎ &nbsp; OPERATIONAL VISIBILITY</div><h1>Проследяване <span>по етапи.</span></h1><p>Събития от транспортната верига — терминали, фериботи, ЖП оператори и автомобилни превозвачи.</p></div><span class="tag">DEMO ENGINE · v0.3</span></div>
+      <div class="notice" role="note"><strong>Демонстрационна система.</strong> Няма реални пратки, GPS данни, връзка към пристанища или потвърдени операторски съобщения. Всички примерни събития са синтетични.</div>
+      <div class="search-card">
+        <form id="search-form"><label for="tracking-ref">НОМЕР НА ПРАТКА / КОНТЕЙНЕР</label><div class="search-row"><input autocomplete="off" id="tracking-ref" spellcheck="false" placeholder="Например DEMO-0001" value="DEMO-0001" required maxlength="50"><button type="submit" class="primary">Проследи пратка <span>↗</span></button></div></form>
+        <div class="examples"><span>Примерни номера:</span><button type="button" data-reference="DEMO-0001">DEMO-0001</button><button type="button" data-reference="DEMO-0002">DEMO-0002</button><button type="button" id="reset-demo">Нулирай демо събития</button></div>
+      </div>
+      <section id="empty-result" class="empty" hidden aria-live="polite"></section>
+      <div id="tracking-detail" hidden>
+        <section class="summary">
+          <div class="summary-top"><div><div class="eyebrow">SHIPMENT OVERVIEW</div><h2 id="detail-ref"></h2><div id="detail-description" class="sub"></div></div><div class="state" id="detail-state">ДЕМО</div></div>
+          <div class="summary-grid">
+            <div><span>ТЕКУЩ ЕТАП</span><strong id="detail-current"></strong><small id="detail-current-location"></small></div>
+            <div><span>ПОСЛЕДНО СЪБИТИЕ</span><strong id="detail-updated"></strong><small>От регистъра на събитията</small></div>
+            <div><span>ПРИМЕРНА ETA</span><strong id="detail-eta"></strong><small>Не е потвърдена от оператор</small></div>
+            <div><span>ПРОИЗХОД НА ДАННИТЕ</span><strong id="detail-source"></strong><small id="detail-trust"></small></div>
+          </div>
+          <div class="progress-heading"><strong>Логистична верига</strong><span id="progress-text"></span></div>
+          <div class="progress-track"><div id="progress-bar"></div></div>
+          <div id="route-steps" class="route-steps"></div>
+        </section>
+        <div id="delay-notice" class="delay" hidden></div>
+        <div class="details-grid">
+          <section class="panel events"><div class="panel-header"><div><div class="eyebrow">EVENT TIMELINE</div><h3>Хронология на пратката</h3></div><span class="outline-tag" id="events-count"></span></div><div id="timeline" class="timeline"></div></section>
+          <div class="side-stack">
+            <section class="panel"><div class="panel-header"><div><div class="eyebrow">TEST EVENT INGESTION</div><h3>Симулирай събитие</h3></div></div>
+              <p class="hint">Тук можеш да тестваш нови логистични статути. Записват се само в твоя браузър, без да се изпращат на оператори.</p>
+              <form id="event-form">
+                <label for="event-type">ТИП НА СЪБИТИЕ</label><select id="event-type" required></select>
+                <label for="event-place">ЛОКАЦИЯ</label><input id="event-place" maxlength="90" required placeholder="Например пристанище Алат">
+                <label for="event-mode">ТРАНСПОРТ</label><select id="event-mode"><option value="road">Автомобилен</option><option value="terminal">Терминал</option><option value="sea">Морски</option><option value="rail">Железопътен</option><option value="customs">Митници</option></select>
+                <label for="event-note">ДОПЪЛНИТЕЛНА БЕЛЕЖКА</label><input id="event-note" maxlength="180" placeholder="По избор">
+                <button type="submit" class="primary full">+ Добави демо събитие</button>
+              </form>
+              <div id="event-feedback" class="feedback" role="status" aria-live="polite"></div>
+            </section>
+            <section class="panel"><div class="panel-header"><div><div class="eyebrow">DATA PROVENANCE</div><h3>Достоверност</h3></div></div>
+              <div class="source-row"><span class="source-dot"></span><span>Демо сценарий</span><strong>Непотвърден</strong></div>
+              <div class="source-row"><span class="source-dot"></span><span>Локален тест</span><strong>Непотвърден</strong></div>
+              <div class="source-row"><span class="source-dot gray"></span><span>Оператор / TOS / GPS</span><strong>Не е свързан</strong></div>
+              <button type="button" id="export-events" class="secondary full">Експорт на хронология (JSON) ↧</button>
+            </section>
+          </div>
+        </div>
+      </div>
+      <footer>CASPIAN LOGISTICS · ПРОЕКТ 2 · TRACKING MODULE v0.3 &nbsp; | &nbsp; Само демонстрация, без реални операторски интеграции.</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>
