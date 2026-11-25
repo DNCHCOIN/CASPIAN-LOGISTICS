@@ -625,6 +625,7 @@ table{color:#253b51}
     if($('#route-output').querySelector('.route-node'))calculateRoute();
     translateVisibleLabels(selected);
     for(const {el,attr,origin} of localizedAttributes)el.setAttribute(attr,transMap.get(origin)[selected]);
+    for(const a of document.querySelectorAll('a[href*="tracking.html"]')){const link=new URL(a.href);link.searchParams.set("lang",selected);a.href=link.toString();}
     const url=new URL(location.href);url.searchParams.set('lang',selected);
     try{history.replaceState(null,'',url);localStorage.setItem('caspian_demo_language',selected)}catch{}
   }
