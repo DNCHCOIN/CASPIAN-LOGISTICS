@@ -82,6 +82,8 @@ function readLocal() {
 }
 let local = readLocal();
 let activeRef = "";
+let displayedRecord = null;
+let searchGeneration = 0;
 let subscription = null;
 let subscribedRef = "";
 function subscribeToEvents(ref) {
@@ -129,6 +131,8 @@ function normalizeEvents(events) {
 function addSummary(label,value,small){}
 function render(data) {
   const shipment=data.shipment,events=normalizeEvents(data.events),last=events.at(-1);
+  displayedRecord={shipment:{...shipment},events};
+  $("#export-events").disabled=false;
   const hasDelay=events.length>0 && last.type==="delay_reported";
   const latestOperational=[...events].reverse().find(e=>e.type!=="delay_reported") || last;
   $("#empty-result").hidden=true;
@@ -172,13 +176,18 @@ function render(data) {
   $("#event-feedback").textContent=API_BASE?"Свързан API режим: локалното симулиране е изключено.":"";
 }
 function showEmpty(message){
+  displayedRecord=null;
+  $("#export-events").disabled=true;
   $("#tracking-detail").hidden=true;
   const el=$("#empty-result");
   el.hidden=false;el.replaceChildren(textNode("strong","Няма резултат"),textNode("span",message));
 }
 async function search(reference) {
+  const generation=++searchGeneration;
+  displayedRecord=null;
+  $("#export-events").disabled=true;
   const ref=safeString(reference,50).toUpperCase();
-  if(!/^[A-Z0-9][A-Z0-9-]{1,49}$/.test(ref)){showEmpty("Използвай 2–50 латински букви, цифри или тирета.");return;}
+  if(!/^[A-Z0-9][A-Z0-9-]{1,49}$/.test(ref)){activeRef="";if(subscription){subscription.close();subscription=null;subscribedRef="";}showEmpty("Използвай 2–50 латински букви, цифри или тирета.");return;}
   $("#tracking-ref").value=ref;
   activeRef=ref;
   const oldRef=ref;
@@ -187,12 +196,12 @@ async function search(reference) {
   $("#tracking-detail").hidden=true;
   try{
     const data=await fetchRecord(ref);
-    if(activeRef!==oldRef)return;
+    if(generation!==searchGeneration || activeRef!==oldRef)return;
     if(!data){showEmpty("Няма информация за този номер. За демо използвай DEMO-0001 или DEMO-0002.");return;}
     render(data);
     subscribeToEvents(ref);
     const url=new URL(location.href);url.searchParams.set("ref",ref);history.replaceState(null,"",url);
-  }catch(err){if(activeRef===oldRef)showEmpty("Няма връзка със сървъра за проследяване. "+safeString(err.message,100));}
+  }catch(err){if(generation===searchGeneration && activeRef===oldRef)showEmpty("Няма връзка със сървъра за проследяване. "+safeString(err.message,100));}
 }
 $("#search-form").addEventListener("submit",e=>{e.preventDefault();search($("#tracking-ref").value);});
 document.querySelectorAll("[data-reference]").forEach(btn=>btn.addEventListener("click",()=>search(btn.dataset.reference)));
@@ -222,10 +231,10 @@ $("#reset-demo").addEventListener("click",()=>{
   local={};persist();search(activeRef || "DEMO-0001");
 });
 $("#export-events").addEventListener("click",()=>{
-  const data=getLocalRecord(activeRef);if(!data)return;
-  const json=JSON.stringify({exported_at:new Date().toISOString(),mode:"DEMO",...data},null,2);
+  const data=displayedRecord;if(!data)return;
+  const json=JSON.stringify({exported_at:new Date().toISOString(),mode:API_BASE?"API":"DEMO",...data},null,2);
   const url=URL.createObjectURL(new Blob([json],{type:"application/json"}));
-  const a=document.createElement("a");a.href=url;a.download="caspian-tracking-"+activeRef+".json";document.body.append(a);a.click();a.remove();
+  const a=document.createElement("a");a.href=url;a.download="caspian-tracking-"+safeString(data.shipment.reference,50)+".json";document.body.append(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 window.addEventListener("storage",e=>{if(e.key===STORAGE_KEY){local=readLocal();if(activeRef)search(activeRef);}});
