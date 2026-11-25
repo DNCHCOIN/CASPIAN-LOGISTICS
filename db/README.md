@@ -1,3 +1,5 @@
+> Current development integration: [service/README.md](../service/README.md) describes the persistent private PostgreSQL API and extensions. The v0.4 notes below describe the earlier foundation. Public GitHub Pages still has no private database connection.
+
 # CASPIAN LOGISTICS — PostgreSQL data foundation v0.4
 
 **Status: schema implemented and tested in isolated PostgreSQL 17 instance. Not yet deployed to a permanent database; not connected to GitHub Pages or the tracking Node API.**

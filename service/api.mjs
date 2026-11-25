@@ -10,9 +10,32 @@ export function createCaspianRoutes(h){
   const p=ctx.url.pathname,method=ctx.req.method,{body}=ctx;if(!p.startsWith('/api/caspian/'))return;
   const u=requireCompany(ctx,method==='GET'?null:'caspian');
   return scoped(ctx.caspian,u.company_id,async c=>{
-   const company=(await ctx.identity.query('SELECT name_latin,country,registration_number,status FROM identity.companies WHERE id=$1',[u.company_id])).rows[0];
+   const company=(await ctx.identity.query('SELECT name_latin,country,registration_number,status,legal_revision FROM identity.companies WHERE id=$1',[u.company_id])).rows[0];
    await c.query('INSERT INTO caspian.organizations(id,legal_name,country_code,registration_number,status) VALUES($1,$2,$3,$4,$5) ON CONFLICT(id) DO UPDATE SET legal_name=excluded.legal_name,status=excluded.status',[u.company_id,company.name_latin,company.country,company.registration_number,company.status==='verified'?'verified':company.status==='suspended'?'suspended':'pending']);
    if(p==='/api/caspian/capabilities' && method==='GET')return {integrations:integrationCapabilities,source:'synthetic_only',cities:{origins,destinations},event_types:types,event_modes:modes};
+   if(p==='/api/caspian/broker-profile' && method==='GET')return {profile:(await c.query('SELECT * FROM caspian.broker_profiles WHERE organization_id=$1',[u.company_id])).rows[0]||null};
+   if(p==='/api/caspian/broker-profile' && method==='PUT'){
+    requireCompany(ctx,'caspian',true);check(body.publish_consent===true,'consent_required');check(Array.isArray(body.locations) && body.locations.length>0 && body.locations.length<=6);check(Array.isArray(body.services) && body.services.length>0 && body.services.length<=3);
+    const locations=[...new Set(body.locations.map(x=>choice(x,['Poti','Batumi','Alat','Tbilisi','Almaty','Aktau'])))],services=[...new Set(body.services.map(x=>choice(x,['customs','documentation','transit'])))];
+    const old=(await c.query('SELECT version FROM caspian.broker_profiles WHERE organization_id=$1 FOR UPDATE',[u.company_id])).rows[0];check(body.version===(old?.version||0),'version_conflict',409);
+    await c.query("INSERT INTO caspian.broker_profiles(organization_id,locations,services,description,license_reference,identity_revision) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT(organization_id) DO UPDATE SET locations=excluded.locations,services=excluded.services,description=excluded.description,license_reference=excluded.license_reference,identity_revision=excluded.identity_revision,status='pending',version=caspian.broker_profiles.version+1,updated_at=now()",[u.company_id,locations,services,str(body.description,10,3000),str(body.license_reference,5,200),company.legal_revision]);await log(c,u,'broker.profile_submitted',u.company_id);return {status:'pending'};
+   }
+   if(p==='/api/caspian/brokers' && method==='GET'){
+    requireCompany(ctx,null,true);const companies=(await ctx.identity.query("SELECT id,name_native,profile,legal_revision FROM identity.companies WHERE status='verified'")).rows;const byId=new Map(companies.map(c=>[c.id,c]));const location=str(ctx.url.searchParams.get('location')||'',0,100);
+    return {items:(await c.query("SELECT organization_id,locations,services,description,identity_revision FROM caspian.broker_profiles WHERE status='approved' AND ($1='' OR $1=ANY(locations))",[location])).rows.filter(r=>byId.get(r.organization_id)?.legal_revision===r.identity_revision).map(r=>({...r,company_name:byId.get(r.organization_id).name_native,contact:byId.get(r.organization_id).profile,verification:'manual_document_review'}))};
+   }
+   if(p==='/api/caspian/broker-inquiries' && method==='GET')return {items:(await c.query('SELECT * FROM caspian.broker_inquiries ORDER BY created_at DESC LIMIT 100')).rows};
+   if(p==='/api/caspian/broker-inquiries' && method==='POST'){
+    requireCompany(ctx,'caspian',true);const recipient=id(body.recipient_id);check(recipient!==u.company_id,'own_broker_profile',409);
+    const broker=(await c.query("SELECT identity_revision FROM caspian.broker_profiles WHERE organization_id=$1 AND status='approved'",[recipient])).rows[0];check(broker,'not_found',404);
+    check((await ctx.identity.query("SELECT id FROM identity.companies WHERE id=$1 AND status='verified' AND legal_revision=$2",[recipient,broker.identity_revision])).rowCount,'not_found',404);
+    const bid=uuid();await c.query('INSERT INTO caspian.broker_inquiries(id,sender_id,recipient_id,message) VALUES($1,$2,$3,$4)',[bid,u.company_id,recipient,str(body.message,10,4000)]);await log(c,u,'broker.inquiry_created',bid);ctx.status=201;return {id:bid};
+   }
+   const brokerInquiry=p.match(/^\/api\/caspian\/broker-inquiries\/([\w-]+)$/);
+   if(brokerInquiry && method==='PATCH'){
+    const r=(await c.query('SELECT * FROM caspian.broker_inquiries WHERE id=$1 FOR UPDATE',[id(brokerInquiry[1])])).rows[0];check(r,'not_found',404);const status=choice(body.status,['accepted','rejected','closed']);check(status==='closed'||r.recipient_id===u.company_id,'role_denied',403);
+    await c.query('UPDATE caspian.broker_inquiries SET status=$2 WHERE id=$1',[r.id,status]);await log(c,u,'broker.inquiry_updated',r.id,{status});return {ok:true};
+   }
    if(p==='/api/caspian/cargo' && method==='GET')return {items:(await c.query('SELECT * FROM caspian.cargo_requests ORDER BY created_at DESC LIMIT 100')).rows.map(normalize)};
    const cargo=p.match(/^\/api\/caspian\/cargo(?:\/([\w-]+))?$/);
    if(cargo && ['POST','PUT','DELETE'].includes(method)){
@@ -74,7 +97,12 @@ export function createCaspianRoutes(h){
     const wid=id(body.warehouse_id),sid=id(body.shipment_id),start=date(body.starts_on),end=date(body.ends_on);check(end>start);const volume=num(body.volume_m3,0.1,1e6),weight=num(body.weight_kg,1,1e8);
     const warehouse=(await c.query('SELECT * FROM caspian.warehouses WHERE id=$1 FOR UPDATE',[wid])).rows[0];check(warehouse,'not_found',404);
     check((await c.query('SELECT id FROM caspian.shipments WHERE id=$1',[sid])).rowCount,'shipment_not_found',404);
-    const used=(await c.query('SELECT coalesce(sum(volume_m3),0) AS volume,coalesce(sum(weight_kg),0) AS weight FROM caspian.reservations WHERE warehouse_id=$1 AND starts_on<$3 AND ends_on>$2',[wid,start,end])).rows[0];
+    // Capacity is the peak simultaneous occupation, not the sum of disjoint bookings.
+    const used=(await c.query(`WITH occupied AS (SELECT * FROM caspian.reservations WHERE warehouse_id=$1 AND starts_on<$3 AND ends_on>$2),
+     deltas AS (SELECT greatest(starts_on,$2::date) AS day,volume_m3 AS v,weight_kg AS w FROM occupied UNION ALL SELECT least(ends_on,$3::date),-volume_m3,-weight_kg FROM occupied),
+     grouped AS (SELECT day,sum(v) AS v,sum(w) AS w FROM deltas GROUP BY day),
+     running AS (SELECT sum(v) OVER(ORDER BY day ROWS UNBOUNDED PRECEDING) AS volume,sum(w) OVER(ORDER BY day ROWS UNBOUNDED PRECEDING) AS weight FROM grouped)
+     SELECT coalesce(max(volume),0) AS volume,coalesce(max(weight),0) AS weight FROM running`,[wid,start,end])).rows[0];
     check(Number(used.volume)+volume<=Number(warehouse.capacity_m3) && Number(used.weight)+weight<=Number(warehouse.capacity_kg),'warehouse_capacity_exceeded',409);
     const rid=uuid();await c.query('INSERT INTO caspian.reservations(id,organization_id,warehouse_id,shipment_id,volume_m3,weight_kg,starts_on,ends_on) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',[rid,u.company_id,wid,sid,volume,weight,start,end]);await log(c,u,'warehouse.reserved',rid);ctx.status=201;return {id:rid,synthetic:true,external_booking:false};
    }

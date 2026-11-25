@@ -30,6 +30,24 @@ CREATE TABLE IF NOT EXISTS caspian.reservations (
  FOREIGN KEY(warehouse_id,organization_id) REFERENCES caspian.warehouses(id,organization_id),
  FOREIGN KEY(shipment_id,organization_id) REFERENCES caspian.shipments(id,organization_id)
 );
+CREATE TABLE IF NOT EXISTS caspian.broker_profiles (
+ organization_id uuid PRIMARY KEY REFERENCES caspian.organizations(id),locations text[] NOT NULL,services text[] NOT NULL,
+ description text NOT NULL,license_reference text NOT NULL,status text NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','suspended')),
+ identity_revision integer NOT NULL,version integer NOT NULL DEFAULT 1,review_note text NOT NULL DEFAULT '',reviewed_by uuid,updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS caspian.broker_inquiries (
+ id uuid PRIMARY KEY,sender_id uuid NOT NULL REFERENCES caspian.organizations(id),recipient_id uuid NOT NULL REFERENCES caspian.broker_profiles(organization_id),
+ message text NOT NULL,status text NOT NULL DEFAULT 'sent' CHECK(status IN ('sent','accepted','rejected','closed')),created_at timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE caspian.broker_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE caspian.broker_inquiries ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS broker_read ON caspian.broker_profiles;
+DROP POLICY IF EXISTS broker_write ON caspian.broker_profiles;
+DROP POLICY IF EXISTS broker_inquiry ON caspian.broker_inquiries;
+CREATE POLICY broker_read ON caspian.broker_profiles FOR SELECT USING(organization_id=caspian.current_organization() OR status='approved' OR current_setting('app.broker_reviewer',true)='on');
+CREATE POLICY broker_write ON caspian.broker_profiles FOR ALL USING(organization_id=caspian.current_organization() OR current_setting('app.broker_reviewer',true)='on') WITH CHECK(organization_id=caspian.current_organization() OR current_setting('app.broker_reviewer',true)='on');
+CREATE POLICY broker_inquiry ON caspian.broker_inquiries USING(sender_id=caspian.current_organization() OR recipient_id=caspian.current_organization()) WITH CHECK(sender_id=caspian.current_organization() OR recipient_id=caspian.current_organization());
+CREATE OR REPLACE FUNCTION caspian.admin_statistics() RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path='' AS $$SELECT jsonb_build_object('cargo',(SELECT count(*) FROM caspian.cargo_requests WHERE status<>'cancelled'),'shipments',(SELECT count(*) FROM caspian.shipments),'warehouses',(SELECT count(*) FROM caspian.warehouses),'brokers_pending',(SELECT count(*) FROM caspian.broker_profiles WHERE status='pending'))$$;
 DO $$DECLARE t text;BEGIN
  FOREACH t IN ARRAY ARRAY['documents','consolidations','allocations','warehouses','reservations'] LOOP
   EXECUTE format('ALTER TABLE caspian.%I ENABLE ROW LEVEL SECURITY',t);
@@ -44,4 +62,5 @@ END $$;
 DROP POLICY IF EXISTS audit_write ON caspian.audit_log;
 CREATE POLICY audit_write ON caspian.audit_log FOR INSERT WITH CHECK(organization_id=caspian.current_organization());
 REVOKE ALL ON ALL TABLES IN SCHEMA caspian FROM PUBLIC;
+REVOKE ALL ON ALL FUNCTIONS IN SCHEMA caspian FROM PUBLIC;
 COMMIT;

@@ -42,3 +42,8 @@
 Изолирана PostgreSQL схема с 9 таблици за фирми, потребители, роли, заявки, пратки, маршрути, събития, документи и журнал. Миграцията и фирмената изолация са проверени с PostgreSQL 17. **Все още няма постоянна база, достъпна от публичния сайт.** [Инструкции за базата](./db/README.md).
 
 Последен функционален модул: Milestone Tracking v0.3; подготвена база данни v0.4 (24 ноември 2026).
+
+
+## Private business implementation — development, 25 November 2026
+
+This branch adds the PostgreSQL-backed operational platform, separate from the public static demo. See [service/README.md](service/README.md) for implemented business flows, security boundaries, tests and remaining launch dependencies. Public production, real shipments, Cloudflare Tunnel and Grupaj.bg are not changed. No client acceptance or 100% completion is claimed.
